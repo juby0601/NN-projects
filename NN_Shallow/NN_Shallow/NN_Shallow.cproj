@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E209EC9A-73E9-402E-983C-3E2488A846BB}</ProjectGuid>
     <Compiler>
-      <Compiler ctype="GppCompiler" xmlns="" />
+      <Compiler ctype="GppCompiler" />
     </Compiler>
     <Language>CPP</Language>
     <Target>Bin</Target>
@@ -26,4 +26,7 @@
     <DefineSymbols>MONODEVELOP</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="main.cpp" />
+  </ItemGroup>
 </Project>
