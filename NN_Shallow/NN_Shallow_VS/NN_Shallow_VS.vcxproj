@@ -110,7 +110,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\NN_Shallow\DataIn.cpp" />
+    <ClCompile Include="..\NN_Shallow\DataOut.cpp" />
+    <ClCompile Include="..\NN_Shallow\HiddenLayer.cpp" />
+    <ClCompile Include="..\NN_Shallow\Input.cpp" />
     <ClCompile Include="..\NN_Shallow\main.cpp" />
+    <ClCompile Include="..\NN_Shallow\Output.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\NN_Shallow\DataIn.h" />
+    <ClInclude Include="..\NN_Shallow\DataOut.h" />
+    <ClInclude Include="..\NN_Shallow\HiddenLayer.h" />
+    <ClInclude Include="..\NN_Shallow\Input.h" />
+    <ClInclude Include="..\NN_Shallow\Output.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
