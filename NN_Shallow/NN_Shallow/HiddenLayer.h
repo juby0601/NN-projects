@@ -1,7 +1,7 @@
 #pragma once
 #include "Layer.h"
 
-class HiddenLayer
+class HiddenLayer: Layer
 {
 public:
 	HiddenLayer();

@@ -36,6 +36,9 @@
     <ClCompile Include="..\NN_Shallow\Neuron.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\NN_Shallow\Layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NN_Shallow\DataIn.h">
