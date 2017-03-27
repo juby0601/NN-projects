@@ -17,6 +17,8 @@ int main() {
 	string nameOfTheFile = "StockPrice.txt";
 	DataOut dataOut(nameOfTheFile);
 
+	vector<vector<int> > data = dataOut.getData();
+
 	char exitInput;
 	cin >> exitInput;
 	return 0;
