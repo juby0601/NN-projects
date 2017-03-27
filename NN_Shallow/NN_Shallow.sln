@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+# Visual Studio 2012
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NN_Shallow_VS", "NN_Shallow_VS\NN_Shallow_VS.vcxproj", "{D843F63D-184D-41A7-A05F-0299C6A8A14D}"
+EndProject
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "NN_Shallow", "NN_Shallow\NN_Shallow.cproj", "{E209EC9A-73E9-402E-983C-3E2488A846BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{D843F63D-184D-41A7-A05F-0299C6A8A14D}.Release|x64.Build.0 = Release|x64
 		{D843F63D-184D-41A7-A05F-0299C6A8A14D}.Release|x86.ActiveCfg = Release|Win32
 		{D843F63D-184D-41A7-A05F-0299C6A8A14D}.Release|x86.Build.0 = Release|Win32
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Release|x64.Build.0 = Release|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{E209EC9A-73E9-402E-983C-3E2488A846BB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

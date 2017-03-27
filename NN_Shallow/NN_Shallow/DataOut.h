@@ -1,8 +1,15 @@
 #pragma once
-class DataOut
-{
+#include<vector>
+#include<iostream>
+#include<fstream>
+#include<string>
+
+class DataOut{
+private:
+	std::vector<std::vector<int> > stockPrice;
+	std::string nameOfFile;
 public:
-	DataOut();
+	DataOut(std::string &input);
 	~DataOut();
 };
 

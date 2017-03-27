@@ -9,6 +9,8 @@
     </Compiler>
     <Language>CPP</Language>
     <Target>Bin</Target>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,5 +30,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.cpp" />
+    <Compile Include="Output.cpp" />
+    <Compile Include="Input.cpp" />
+    <Compile Include="HiddenLayer.cpp" />
+    <Compile Include="DataOut.cpp" />
+    <Compile Include="DataIn.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Output.h" />
+    <None Include="Input.h" />
+    <None Include="HiddenLayer.h" />
+    <None Include="DataOut.h" />
+    <None Include="DataIn.h" />
   </ItemGroup>
 </Project>

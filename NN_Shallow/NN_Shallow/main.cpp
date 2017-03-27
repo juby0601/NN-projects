@@ -5,7 +5,6 @@
 #include "HiddenLayer.h"
 #include "Output.h"
 #include "DataOut.h"
-#include <iostream>
 
 using namespace std;
 
@@ -14,9 +13,12 @@ int main() {
 	Input input;
 	HiddenLayer hiddenLayers[HIDDEN_LAYERS];
 	Output output;
-	DataOut dataOut;
+
+	string nameOfTheFile = "StockPrice.txt";
+	DataOut dataOut(nameOfTheFile);
 
 	char exitInput;
 	cin >> exitInput;
 	return 0;
 }
+;
