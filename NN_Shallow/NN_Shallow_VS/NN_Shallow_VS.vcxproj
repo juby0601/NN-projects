@@ -124,6 +124,7 @@
     <ClCompile Include="..\NN_Shallow\main.cpp" />
     <ClCompile Include="..\NN_Shallow\Neuron.cpp" />
     <ClCompile Include="..\NN_Shallow\Output.cpp" />
+    <ClCompile Include="..\NN_Shallow\Runner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NN_Shallow\Config.h" />
@@ -134,6 +135,10 @@
     <ClInclude Include="..\NN_Shallow\Layer.h" />
     <ClInclude Include="..\NN_Shallow\Neuron.h" />
     <ClInclude Include="..\NN_Shallow\Output.h" />
+    <ClInclude Include="..\NN_Shallow\Runner.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\NN_Shallow\bin\Debug\StockPrice.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -39,6 +39,9 @@
     <ClCompile Include="..\NN_Shallow\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\NN_Shallow\Runner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NN_Shallow\DataIn.h">
@@ -65,5 +68,11 @@
     <ClInclude Include="..\NN_Shallow\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\NN_Shallow\Runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\NN_Shallow\bin\Debug\StockPrice.txt" />
   </ItemGroup>
 </Project>

@@ -1,3 +1,4 @@
+#include "Config.h"
 #include "Neuron.h"
 
 Neuron::Neuron() {
@@ -6,25 +7,25 @@ Neuron::Neuron() {
 Neuron::~Neuron() {
 }
 
-void Neuron::Init(int inputChannels) {
-	inputs.resize(inputChannels);
-	weights.resize(inputChannels);
-	product.resize(inputChannels);
+void Neuron::Init(std::vector<double> &inputVector) {
+	inputs = inputVector;
+	weights.resize(inputVector.size());
+	product.resize(inputVector.size());
+
+	GenerateInitialWeights();
 }
 
-void Neuron::Input(double input, int index) {
-	inputs.at(index) = input;
-}
-
-void Neuron::ComputeOutput() {
+double Neuron::ComputeOutput() {
 	for (unsigned int i = 0; i < product.size(); i++) {
 		product.at(i) = weights.at(i) * inputs.at(i);
 	}
-	output = Sum(product);
+	return Sum(product);
 }
 
-double Neuron::GetOutput() {
-	return output;
+void Neuron::GenerateInitialWeights() {
+	for (unsigned int i = 0; i < weights.size(); i++) {
+		weights.at(i) = WEIGHT_MIN + (std::rand() % (WEIGHT_MAX - WEIGHT_MIN + 1));
+	}
 }
 
 double Neuron::Sum(std::vector<double> &vector) {

@@ -8,12 +8,13 @@ class Layer
 public:
 	Layer();
 	~Layer();
-	void Init(Layer* pPrevious, Layer* pNext);
-	void FeedFoward();
+	void Init(unsigned int &layerNeurons, std::vector<double> &inputVector);
+	void ComputeOutputs();
 	unsigned int GetNeurons();
 	Neuron &GetNeuron(unsigned int index);
 private:
+	std::vector<double> inputs;
+	std::vector<double> outputs;
 	std::vector<Neuron> neurons;
-	Layer* pPreviousLayer;
-	Layer* pNextLayer;
+	unsigned int neuronQuantity;
 };
