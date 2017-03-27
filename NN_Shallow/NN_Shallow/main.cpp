@@ -1,4 +1,5 @@
 ﻿
+#include "Config.h"
 #include "DataIn.h"
 #include "Input.h"
 #include "HiddenLayer.h"
@@ -9,11 +10,9 @@
 using namespace std;
 
 int main() {
-
-	const int HIDDEN_LAYERS = 1;
-	HiddenLayer hiddenLayers[HIDDEN_LAYERS];
 	DataIn dataIn;
 	Input input;
+	HiddenLayer hiddenLayers[HIDDEN_LAYERS];
 	Output output;
 	DataOut dataOut;
 
