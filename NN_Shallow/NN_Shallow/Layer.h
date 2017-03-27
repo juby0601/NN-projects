@@ -12,7 +12,10 @@ public:
 	void InitInputlayer(unsigned int windowSize, std::vector<double> inputVector); 
 	void ComputeOutputs();
 	std::vector<double> GetOutput();
+	std::vector<double> GetInput();
+	int LayerSize();
 	Neuron &GetNeuron(unsigned int index);
+	void UpdateLayer(std::vector<double> inputVector);
 private:
 	std::vector<double> outputs;
 	std::vector<double> inputs;

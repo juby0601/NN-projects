@@ -6,34 +6,24 @@
 #include "Output.h"
 #include "DataOut.h"
 #include <cstddef>
-#include "Layer.h"
 
 using namespace std;
 
 Runner::Runner()
-{
-}
+{}
 
 void Runner::Training(){
 	string nameOfTheFile = "StockPrice.txt";
 	DataIn dataIn(nameOfTheFile);
-
 	vector<vector<double> > data = dataIn.GetData();
-
-	double result;
-	
 	vector<Layer> MLP(NUMBER_OF_LAYERS);
-
 	Layer inputLayer;
-
 	vector<double> stockPriceInput;
 	for (unsigned int i = 0; i < WINDOW_SIZE; i++){
 		stockPriceInput.push_back(data[2][i]);
 	}
-
 	MLP.at(0).InitInputlayer(WINDOW_SIZE, stockPriceInput);
 	MLP.at(0).ComputeOutputs();
-
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		if (i == NUMBER_OF_LAYERS-1){
 			MLP.at(i).Init(1,MLP.at(i-1).GetOutput());
@@ -43,29 +33,59 @@ void Runner::Training(){
 			MLP.at(i).ComputeOutputs();
 		}
 	}
-	cout << MLP.at(3).GetOutput().at(0) << endl;
-	cout << MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1] + data[1][WINDOW_SIZE-1] << endl;
-	cout << data[1][WINDOW_SIZE] << endl;
-	cout << (MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1] + data[1][WINDOW_SIZE-1])-data[1][WINDOW_SIZE] << endl;
+
+	double error = (MLP.at(3).GetOutput().at(0) - ((data[1][WINDOW_SIZE]-data[1][WINDOW_SIZE-1])/data[1][WINDOW_SIZE-1]));
+	cout << (0.5*error*error) << endl;
+
+	while ((0.5*error*error) > ERROR_THRESHOLD){
+		Backpropogation(LERANING_RATE, MLP,error);
+		for (unsigned int i = 1; i<MLP.size(); i++){
+			MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
+			MLP.at(i).ComputeOutputs();
+		}
+		error = (MLP.at(3).GetOutput().at(0) - ((data[1][WINDOW_SIZE]-data[1][WINDOW_SIZE-1])/data[1][WINDOW_SIZE-1]));
+		cout << (0.5*error*error) << endl;
+	}
+
+	cout << "Real value: " << data[1][WINDOW_SIZE] << endl;
+	cout << "Predicted value: " << MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1]+data[1][WINDOW_SIZE-1] << endl;
+	cout << "Difference: " << data[1][WINDOW_SIZE] - (MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1]+data[1][WINDOW_SIZE-1]) << endl;
 }
 
-void Runner::Backpropogation(){
+void Runner::Backpropogation(double learningRate, vector<Layer> &MLP, double error){
+	vector< vector<double> > weightTemps;
+	vector<double> weightTemp;
+	vector<double> inputTemp;
 
+	for (unsigned int i = MLP.size()-1; i>0; i--){
+		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
+			weightTemp = MLP[i].GetNeuron(j).getWeights();
+			inputTemp = MLP[i].GetInput();
+
+			if (i == (MLP.size()-1)){
+				for (unsigned int k = 0; k<weightTemp.size(); k++){
+					weightTemp[k] += learningRate*error*inputTemp[k];
+				}
+			}else{
+				for (unsigned int k = 0; k<weightTemp.size(); k++){
+					for (unsigned int t = 0; t<MLP[i+1].LayerSize(); t++){
+						weightTemp[k] += learningRate*error*inputTemp[k]*MLP[i+1].GetNeuron(t).getWeights()[j];
+					}
+				}
+			}
+
+			weightTemps.push_back(weightTemp);
+		}
+	}
+
+	int weightCounter = 0;
+	for (unsigned int i = MLP.size()-1; i>0; i--){
+		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
+			MLP[i].GetNeuron(j).setWeights(weightTemps[weightCounter]);
+			weightCounter++;
+		}
+	}
 }
-
-/*
-  initialize network weights (often small random values)
-  do
-     forEach training example named ex
-        prediction = neural-net-output(network, ex)  // forward pass
-        actual = teacher-output(ex)
-        compute error (prediction - actual) at the output units
-        compute {\displaystyle \Delta w_{h}} \Delta w_h for all weights from hidden layer to output layer  // backward pass
-        compute {\displaystyle \Delta w_{i}} \Delta w_i for all weights from input layer to hidden layer   // backward pass continued
-        update network weights // input layer not modified by error estimate
-  until all examples classified correctly or another stopping criterion satisfied
-  return the network
-*/
 
 Runner::~Runner()
 {

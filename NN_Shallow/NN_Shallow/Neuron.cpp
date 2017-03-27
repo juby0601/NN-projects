@@ -28,6 +28,10 @@ void Neuron::Init(double &input) {
 	GenerateInitialWeights();
 }
 
+void Neuron::UpdateNeuron(std::vector<double> inputVector){
+	inputs = inputVector;
+}
+
 double Neuron::ComputeOutput() {
 	for (unsigned int i = 0; i < product.size(); i++) {
 		product.at(i) = weights.at(i) * inputs.at(i);
@@ -48,4 +52,12 @@ double Neuron::Sum(std::vector<double> &vector) {
 		sum += vector.at(i);
 	}
 	return sum;
+}
+
+vector<double> Neuron::getWeights(){
+	return weights;
+}
+
+void Neuron::setWeights(vector<double> &inputWeights){
+	weights = inputWeights;
 }

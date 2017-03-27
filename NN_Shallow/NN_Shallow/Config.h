@@ -8,3 +8,5 @@ const unsigned int HIDDEN_LAYER_NEURONS = 3;
 const unsigned int OUTPUT_NEURONS = 1;
 const double WEIGHT_MIN = -WEIGHT_SCALE;
 const double WEIGHT_MAX = WEIGHT_SCALE;
+const double LERANING_RATE = -0.1;
+const double ERROR_THRESHOLD = 0.00000000001;

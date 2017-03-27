@@ -26,6 +26,13 @@ void Layer::InitInputlayer(unsigned int windowSize, std::vector<double> inputVec
 	}
 }
 
+void Layer::UpdateLayer(std::vector<double> inputVector){
+	inputs = inputVector;
+	for (unsigned int i = 0; i < neurons.size(); i++) {
+		neurons.at(i).UpdateNeuron(inputs);
+	}
+}
+
 void Layer::ComputeOutputs() {
 	for (unsigned int i = 0; i < neurons.size(); i++) {
 		outputs.at(i) =	neurons.at(i).ComputeOutput();
@@ -36,6 +43,14 @@ vector<double> Layer::GetOutput() {
 	return outputs;
 }
 
+vector<double> Layer::GetInput() {
+	return inputs;
+}
+
 Neuron & Layer::GetNeuron(unsigned int index) {
 	return neurons.at(index);
+}
+
+int Layer::LayerSize(){
+	return neurons.size();
 }
