@@ -10,13 +10,14 @@
 using namespace std;
 
 Runner::Runner()
-{}
+{
+	MLP.resize(NUMBER_OF_LAYERS);
+}
 
 void Runner::Training(){
 	string nameOfTheFile = "StockPrice.txt";
 	DataIn dataIn(nameOfTheFile);
-	vector<vector<double> > data = dataIn.GetData();
-	vector<Layer> MLP(NUMBER_OF_LAYERS);
+	data = dataIn.GetData();
 	Layer inputLayer;
 	vector<double> stockPriceInput;
 	for (unsigned int i = 0; i < WINDOW_SIZE; i++){
@@ -35,7 +36,6 @@ void Runner::Training(){
 	}
 
 	double error = (MLP.at(3).GetOutput().at(0) - ((data[1][WINDOW_SIZE]-data[1][WINDOW_SIZE-1])/data[1][WINDOW_SIZE-1]));
-	cout << (0.5*error*error) << endl;
 
 	while ((0.5*error*error) > ERROR_THRESHOLD){
 		Backpropogation(LERANING_RATE, MLP,error);
@@ -44,12 +44,14 @@ void Runner::Training(){
 			MLP.at(i).ComputeOutputs();
 		}
 		error = (MLP.at(3).GetOutput().at(0) - ((data[1][WINDOW_SIZE]-data[1][WINDOW_SIZE-1])/data[1][WINDOW_SIZE-1]));
-		cout << (0.5*error*error) << endl;
+		//cout << (0.5*error*error) << endl;
 	}
 
+	cout << "Finished training" << endl;
 	cout << "Real value: " << data[1][WINDOW_SIZE] << endl;
 	cout << "Predicted value: " << MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1]+data[1][WINDOW_SIZE-1] << endl;
 	cout << "Difference: " << data[1][WINDOW_SIZE] - (MLP.at(3).GetOutput().at(0)*data[1][WINDOW_SIZE-1]+data[1][WINDOW_SIZE-1]) << endl;
+	cout << endl;
 }
 
 void Runner::Backpropogation(double learningRate, vector<Layer> &MLP, double error){
@@ -85,6 +87,42 @@ void Runner::Backpropogation(double learningRate, vector<Layer> &MLP, double err
 			weightCounter++;
 		}
 	}
+}
+
+void Runner::Prediction(int time){
+	vector<double> initializer;
+	vector<double> stockPriceInput;
+	vector<double> predictedStockPriceChange;
+	vector<double> predictedStockPrice;
+	predictedStockPrice.push_back(data[1][WINDOW_SIZE-1]);
+	for (unsigned int i = 0; i<time; i++){
+		int counter = 0;
+		for (unsigned int j = 0; j < WINDOW_SIZE; j++){
+			if (j+i < WINDOW_SIZE){
+				stockPriceInput.push_back(data[2][j+i]);
+			}else if (i > WINDOW_SIZE){
+				stockPriceInput.push_back(predictedStockPriceChange[counter+(i-WINDOW_SIZE)]);
+				counter++;
+			}else{
+				stockPriceInput.push_back(predictedStockPriceChange[counter]);
+				counter++;
+			}
+		}
+		MLP.at(0).InitInputlayer(WINDOW_SIZE,stockPriceInput);
+		MLP.at(0).ComputeOutputs();
+		stockPriceInput = initializer;
+		for (unsigned int k = 1; k<MLP.size(); k++){
+			MLP.at(k).UpdateLayer(MLP.at(k-1).GetOutput());
+			MLP.at(k).ComputeOutputs();
+		}
+		predictedStockPriceChange.push_back(MLP.at(3).GetOutput().at(0));
+		predictedStockPrice.push_back(predictedStockPriceChange[i]*predictedStockPrice[i]+predictedStockPrice[i]);
+	}
+
+	cout << "Prediction" << endl;
+	cout << "Real value: " << data[1][WINDOW_SIZE+time-1] << endl;
+	cout << "Predicted value: " << predictedStockPrice[time] << endl;
+	cout << "Difference: " << data[1][WINDOW_SIZE+time-1] - predictedStockPrice[time] << endl;
 }
 
 Runner::~Runner()
