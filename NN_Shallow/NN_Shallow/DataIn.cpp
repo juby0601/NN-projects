@@ -44,7 +44,7 @@ DataIn::DataIn(string &input)
       			monthIStart = monthI;
       			dayIStart = dayI;
       		}else{
-      			int differenceInDate = numberOfDays(yearI,monthI,dayI) - numberOfDays(yearIStart,monthIStart,dayIStart); 
+      			int differenceInDate = NumberOfDays(yearI,monthI,dayI) - NumberOfDays(yearIStart,monthIStart,dayIStart); 
       			dateVector.push_back(differenceInDate);
       		}
       		stockPriceVector.push_back(stockpriceInt);
@@ -58,16 +58,16 @@ DataIn::DataIn(string &input)
 
   	data.push_back(dateVector);
   	data.push_back(stockPriceVector);
-  	percentageChanges();
+  	PercentageChanges();
 }
 
-int DataIn::numberOfDays(int year, int month, int day){
+int DataIn::NumberOfDays(int year, int month, int day){
 	if (month < 3)
 		year--, month += 12;
 	return 365*year + year/4 - year/100 + year/400 + (153*month - 457)/5 + day - 306;
 }
 
-void DataIn::percentageChanges(){
+void DataIn::PercentageChanges(){
 	vector<double> percentage;
 	double changeInPercentage;
 	for (unsigned int i = 0; i < data[1].size(); i++) {

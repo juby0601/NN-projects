@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <stdlib.h> 
 
 class Neuron
 {
@@ -7,6 +8,7 @@ public:
 	Neuron();
 	~Neuron();
 	void Init(std::vector<double> &inputVector);
+	void Init(double &input);
 	double ComputeOutput();
 
 private:

@@ -12,9 +12,9 @@ private:
 	std::string nameOfFile;
 public:
 	DataIn(std::string &input);
-	int numberOfDays(int year, int month, int day);
-	std::vector<std::vector<double> > getData(){return data;};
-	void percentageChanges();
+	int NumberOfDays(int year, int month, int day);
+	std::vector<std::vector<double> > GetData(){return data;};
+	void PercentageChanges();
 	~DataIn();
 };
 

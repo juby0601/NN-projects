@@ -1,5 +1,8 @@
 #include "Config.h"
 #include "Neuron.h"
+#include <iostream>
+
+using namespace std;
 
 Neuron::Neuron() {
 }
@@ -15,6 +18,16 @@ void Neuron::Init(std::vector<double> &inputVector) {
 	GenerateInitialWeights();
 }
 
+void Neuron::Init(double &input) {
+	vector<double> inputTemp;
+	inputTemp.push_back(input);
+	inputs = inputTemp;
+	weights.resize(1);
+	product.resize(1);
+
+	GenerateInitialWeights();
+}
+
 double Neuron::ComputeOutput() {
 	for (unsigned int i = 0; i < product.size(); i++) {
 		product.at(i) = weights.at(i) * inputs.at(i);
@@ -24,7 +37,8 @@ double Neuron::ComputeOutput() {
 
 void Neuron::GenerateInitialWeights() {
 	for (unsigned int i = 0; i < weights.size(); i++) {
-		weights.at(i) = WEIGHT_MIN + (std::rand() % (WEIGHT_MAX - WEIGHT_MIN + 1));
+		double r = ((double) rand() / (RAND_MAX));
+		weights.at(i) = WEIGHT_SCALE * (r*2-1);
 	}
 }
 
