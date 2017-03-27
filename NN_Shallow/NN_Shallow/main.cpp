@@ -1,10 +1,5 @@
 ﻿
-#include "Config.h"
-#include "DataIn.h"
-#include "Input.h"
-#include "HiddenLayer.h"
-#include "Output.h"
-#include "DataOut.h"
+#include "Runner.h"
 
 using namespace std;
 
