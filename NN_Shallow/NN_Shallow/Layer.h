@@ -16,6 +16,7 @@ public:
 	int LayerSize();
 	Neuron &GetNeuron(unsigned int index);
 	void UpdateLayer(std::vector<double> inputVector);
+	void UpdateInputLayer(std::vector<double> inputVector);
 private:
 	std::vector<double> outputs;
 	std::vector<double> inputs;

@@ -8,7 +8,7 @@ Layer::Layer() {
 Layer::~Layer() {
 }
 
-void Layer::Init(unsigned int layerNeurons, std::vector<double> inputVector) {
+void Layer::Init(unsigned int layerNeurons, vector<double> inputVector) {
 	inputs = inputVector;
 	neurons.resize(layerNeurons);
 	outputs.resize(layerNeurons);
@@ -17,12 +17,19 @@ void Layer::Init(unsigned int layerNeurons, std::vector<double> inputVector) {
 	}
 }
 
-void Layer::InitInputlayer(unsigned int windowSize, std::vector<double> inputVector) {
+void Layer::InitInputlayer(unsigned int windowSize, vector<double> inputVector) {
 	inputs = inputVector;
 	neurons.resize(windowSize);
 	outputs.resize(windowSize);
 	for (unsigned int i = 0; i < neurons.size(); i++) {
 		neurons.at(i).Init(inputs[i]);
+	}
+}
+
+void Layer::UpdateInputLayer(vector<double> inputVector){
+	inputs = inputVector;
+	for (unsigned int i = 0; i < neurons.size(); i++) {
+		neurons.at(i).UpdateNeuron(inputs[i]);
 	}
 }
 

@@ -108,7 +108,7 @@ void Runner::Prediction(int time){
 				counter++;
 			}
 		}
-		MLP.at(0).InitInputlayer(WINDOW_SIZE,stockPriceInput);
+		MLP.at(0).UpdateInputLayer(stockPriceInput);
 		MLP.at(0).ComputeOutputs();
 		stockPriceInput = initializer;
 		for (unsigned int k = 1; k<MLP.size(); k++){

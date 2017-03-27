@@ -8,11 +8,12 @@ public:
 	Neuron();
 	~Neuron();
 	void Init(std::vector<double> &inputVector);
-	void Init(double &input);
+	void Init(double input);
 	double ComputeOutput();
 	std::vector<double> getWeights();
 	void setWeights(std::vector<double> &inputWeights);
 	void UpdateNeuron(std::vector<double> inputVector);
+	void UpdateNeuron(double input);
 private:
 	void GenerateInitialWeights();
 

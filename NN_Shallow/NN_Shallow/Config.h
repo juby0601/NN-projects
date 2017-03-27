@@ -1,7 +1,7 @@
 #pragma once
 
 const double WEIGHT_SCALE = 1;
-const unsigned int WINDOW_SIZE = 20;
+const unsigned int WINDOW_SIZE = 50;
 const unsigned int NUMBER_OF_LAYERS = 4;
 const unsigned int INPUTS_NEURONS = 3;
 const unsigned int HIDDEN_LAYER_NEURONS = 3;

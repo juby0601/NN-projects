@@ -18,7 +18,7 @@ void Neuron::Init(std::vector<double> &inputVector) {
 	GenerateInitialWeights();
 }
 
-void Neuron::Init(double &input) {
+void Neuron::Init(double input) {
 	vector<double> inputTemp;
 	inputTemp.push_back(input);
 	inputs = inputTemp;
@@ -30,6 +30,12 @@ void Neuron::Init(double &input) {
 
 void Neuron::UpdateNeuron(std::vector<double> inputVector){
 	inputs = inputVector;
+}
+
+void Neuron::UpdateNeuron(double input){
+	vector<double> inputTemp;
+	inputTemp.push_back(input);
+	inputs = inputTemp;
 }
 
 double Neuron::ComputeOutput() {

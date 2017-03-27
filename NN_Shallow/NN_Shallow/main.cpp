@@ -27,7 +27,7 @@ int main() {
 
 	Runner runner;
 	runner.Training();
-	runner.Prediction(5);
+	runner.Prediction(10);
 
 	char exitInput;
 	cin >> exitInput;
