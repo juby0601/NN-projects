@@ -42,6 +42,5 @@
     <None Include="HiddenLayer.h" />
     <None Include="DataOut.h" />
     <None Include="DataIn.h" />
-    <None Include="StockPrice.txt" />
   </ItemGroup>
 </Project>

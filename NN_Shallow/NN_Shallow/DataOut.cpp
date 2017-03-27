@@ -15,7 +15,6 @@ DataOut::DataOut(string &input)
   	}else if(stockPriceInfo.fail()){
   		cout << "Failed to open the file about stock price" << endl;
   	}
-
 }
 
 
