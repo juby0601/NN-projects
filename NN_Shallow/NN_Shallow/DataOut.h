@@ -13,7 +13,7 @@ private:
 public:
 	DataOut(std::string &input);
 	int numberOfDays(int year, int month, int day);
-	vector<int> getData(){return data};
+	std::vector<std::vector<int> > getData(){return data;};
 	~DataOut();
 };
 

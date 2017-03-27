@@ -52,7 +52,7 @@ DataOut::DataOut(string &input)
       		dayIPr = dayI;
     	}
     stockPriceInfo.close();
-  	}else if(stockPriceInfo.fail()){
+  	}else{
   		cout << "Failed to open the file about stock price" << endl;
   	}
 
@@ -65,7 +65,6 @@ int DataOut::numberOfDays(int year, int month, int day){
 		year--, month += 12;
 	return 365*year + year/4 - year/100 + year/400 + (153*month - 457)/5 + day - 306;
 }
-
 
 DataOut::~DataOut()
 {
