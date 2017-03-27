@@ -16,5 +16,4 @@ private:
 	std::vector<double> inputs;
 	std::vector<double> outputs;
 	std::vector<Neuron> neurons;
-	unsigned int neuronQuantity;
 };

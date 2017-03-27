@@ -1,9 +1,9 @@
-﻿  Neuron.cpp
-  Layer.cpp
+﻿  main.cpp
+  DataOut.cpp
+  DataIn.cpp
   Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
+  Compiling...
   Runner.cpp
-  HiddenLayer.cpp
+  Generating Code...
   NN_Shallow_VS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\NN_Shallow\Debug\NN_Shallow_VS.exe
   NN_Shallow_VS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\NN_Shallow\Debug\NN_Shallow_VS.pdb (Partial PDB)
