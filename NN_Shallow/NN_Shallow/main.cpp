@@ -1,5 +1,4 @@
-﻿
-#include "Runner.h"
+﻿#include "Runner.h"
 
 using namespace std;
 

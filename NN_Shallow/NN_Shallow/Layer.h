@@ -1,6 +1,7 @@
 #pragma once
 #include "Neuron.h"
 #include <vector>
+#include <cstddef>
 
 class Layer
 {

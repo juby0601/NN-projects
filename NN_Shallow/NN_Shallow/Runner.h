@@ -5,12 +5,14 @@
 #include "HiddenLayer.h"
 #include "Output.h"
 #include "DataOut.h"
+#include <cstddef>
 
 class Runner
 {
 public:
 	Runner();
-	training();
+	void training();
+	void backpropogation();
 	~Runner();
 };
 
