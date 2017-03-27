@@ -35,6 +35,7 @@
     <Compile Include="HiddenLayer.cpp" />
     <Compile Include="DataOut.cpp" />
     <Compile Include="DataIn.cpp" />
+    <Compile Include="Neuron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Output.h" />
@@ -43,5 +44,6 @@
     <None Include="DataOut.h" />
     <None Include="DataIn.h" />
     <None Include="bin\Debug\StockPrice.txt" />
+    <None Include="Neuron.h" />
   </ItemGroup>
 </Project>

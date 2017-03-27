@@ -7,7 +7,7 @@ DataOut::DataOut(string &input)
 	vector<int> stockPriceVector;
 	string line;
 	ifstream stockPriceInfo;
-	int yearI, monthI, dayI, yearIPr, monthIPr, dayIPr;
+	int yearI, monthI, dayI, yearIStart, monthIStart, dayIStart;
     int stockpriceInt;
     string date,year,month,day;
     string stockprice;
@@ -25,6 +25,7 @@ DataOut::DataOut(string &input)
       		getline(dateSS,day,'.');
 
       		sentence >> stockprice;
+      		stockprice.erase(remove(stockprice.begin(), stockprice.end(), ','), stockprice.end());
 
       		//String to int
       		stringstream converterYear(year);
@@ -38,18 +39,17 @@ DataOut::DataOut(string &input)
       		converterStockPrice>>stockpriceInt;
 
       		if (numberOfIterations == 1){
-      			dateVector.push_back(1);
+      			dateVector.push_back(0);
+      			yearIStart = yearI;
+      			monthIStart = monthI;
+      			dayIStart = dayI;
       		}else{
-      			int differenceInDate = numberOfDays(yearI,monthI,dayI) - numberOfDays(yearIPr,monthIPr,dayIPr); 
+      			int differenceInDate = numberOfDays(yearI,monthI,dayI) - numberOfDays(yearIStart,monthIStart,dayIStart); 
       			dateVector.push_back(differenceInDate);
       		}
       		stockPriceVector.push_back(stockpriceInt);
 
       		numberOfIterations++;
-
-      		yearIPr = yearI;
-      		monthIPr = monthI;
-      		dayIPr = dayI;
     	}
     stockPriceInfo.close();
   	}else{
