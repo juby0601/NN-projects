@@ -33,22 +33,22 @@
     <Compile Include="Output.cpp" />
     <Compile Include="Input.cpp" />
     <Compile Include="HiddenLayer.cpp" />
-    <Compile Include="DataOut.cpp" />
-    <Compile Include="DataIn.cpp" />
     <Compile Include="Neuron.cpp" />
     <Compile Include="Runner.cpp" />
     <Compile Include="Layer.cpp" />
+    <Compile Include="DataOut.cpp" />
+    <Compile Include="DataIn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Output.h" />
     <None Include="Input.h" />
     <None Include="HiddenLayer.h" />
-    <None Include="DataOut.h" />
-    <None Include="DataIn.h" />
     <None Include="bin\Debug\StockPrice.txt" />
     <None Include="Neuron.h" />
     <None Include="Runner.h" />
     <None Include="Layer.h" />
     <None Include="Config.h" />
+    <None Include="DataOut.h" />
+    <None Include="DataIn.h" />
   </ItemGroup>
 </Project>
