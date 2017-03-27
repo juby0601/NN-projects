@@ -1,1 +1,12 @@
-﻿<Properties StartupItem="NN_Shallow/NN_Shallow.cproj" />
+﻿<Properties StartupItem="NN_Shallow_VS/NN_Shallow_VS.vcxproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x64" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="NN_Shallow/main.cpp">
+    <Files>
+      <File FileName="NN_Shallow/main.cpp" Line="10" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
