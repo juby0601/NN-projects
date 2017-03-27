@@ -123,6 +123,7 @@ void Runner::Prediction(int time){
 	cout << "Real value: " << data[1][WINDOW_SIZE+time-1] << endl;
 	cout << "Predicted value: " << predictedStockPrice[time] << endl;
 	cout << "Difference: " << data[1][WINDOW_SIZE+time-1] - predictedStockPrice[time] << endl;
+	cout << "Error in percentage: " << (data[1][WINDOW_SIZE+time-1] - predictedStockPrice[time])/data[1][WINDOW_SIZE+time-1]*100 << endl;
 }
 
 Runner::~Runner()
