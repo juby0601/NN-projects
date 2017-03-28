@@ -18,7 +18,6 @@ void Runner::Training(){
 	string nameOfTheFile = "StockPrice.txt";
 	DataIn dataIn(nameOfTheFile);
 	data = dataIn.GetData();
-	Layer inputLayer;
 	vector<double> stockPriceInput;
 	for (unsigned int i = 0; i < WINDOW_SIZE; i++){
 		stockPriceInput.push_back(data[2][i]);
