@@ -39,13 +39,15 @@ void Runner::Training(){
 	vector<double> initializer;
 
 	double error = 0;
+	double previousError = 5000;
 	for (unsigned int i = 0; i < predictedValues.size(); i++){
 		errorVector.push_back(data[2][WINDOW_SIZE+i]-predictedValues[i]);
 		RMSError.push_back(0.5*(data[2][WINDOW_SIZE+i]-predictedValues[i])*(data[2][WINDOW_SIZE+i]-predictedValues[i]));
 		error = SumVector(RMSError);
 	}
 
-	while (error > ERROR_THRESHOLD){
+	cout << error << endl;
+	while ((previousError - error)>ERROR_THRESHOLD || (error-previousError) > ERROR_THRESHOLD){ 
 		Backpropogation(LERANING_RATE,errorVector);
 		errorVector = initializer;
 		RMSError = initializer;
@@ -53,6 +55,7 @@ void Runner::Training(){
 		for (unsigned int i = 0; i < predictedValues.size(); i++){
 			errorVector.push_back(data[2][WINDOW_SIZE+i]-predictedValues[i]);
 			RMSError.push_back(0.5*(data[2][WINDOW_SIZE+i]-predictedValues[i])*(data[2][WINDOW_SIZE+i]-predictedValues[i]));
+			previousError = error;
 			error = SumVector(RMSError);
 		}
 		cout << error << endl;
