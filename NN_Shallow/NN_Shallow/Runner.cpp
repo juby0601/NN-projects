@@ -110,17 +110,16 @@ void Runner::Backpropogation(double learningRate, vector<double> error){
 			}else{
 				MLP[i].GetNeuron(j).SetWeightProduct(0);
 
+				// Loop through each connection going out of each neuron
+				for (unsigned int t = 0; t<MLP[i + 1].LayerSize() - 1; t++) {
+
+					// TODO: change eroor to be value instead of vector
+					//weightTemp[k] += learningRate*SumVector(error)*inputTemp[k] * MLP[i + 1].GetNeuron(t).getWeights()[j];
+					MLP[i].GetNeuron(j).SetWeightProduct(MLP[i].GetNeuron(j).GetWeightProduct() + MLP[i + 1].GetNeuron(t).getWeights()[j] * MLP[i + 1].GetNeuron(t).GetWeightProduct());
+				}
+
 				// Loop through weights going into each neuron
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-
-					// Loop through each connection going out of each neuron
-					for (unsigned int t = 0; t<MLP[i+1].LayerSize()-1; t++){
-
-						// TODO: change eroor to be value instead of vector
-						//weightTemp[k] += learningRate*SumVector(error)*inputTemp[k] * MLP[i + 1].GetNeuron(t).getWeights()[j];
-						MLP[i].GetNeuron(j).SetWeightProduct(MLP[i].GetNeuron(j).GetWeightProduct() + MLP[i + 1].GetNeuron(t).getWeights()[j] * MLP[i + 1].GetNeuron(t).GetWeightProduct());
-						
-					}
 					weightTemp[k] += learningRate*SumVector(error)*inputTemp[k] * MLP[i].GetNeuron(j).GetWeightProduct();
 				}
 			}
