@@ -27,9 +27,9 @@ int main() {
 
 	Runner runner;
 	runner.Training();
-	runner.printWeights();
+	//runner.printWeights();
 	runner.Prediction(2);
-	runner.printWeights();
+	//runner.printWeights();
 
 //	char exitInput;
 //	cin >> exitInput;

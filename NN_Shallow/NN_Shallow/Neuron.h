@@ -14,6 +14,7 @@ public:
 	void setWeights(std::vector<double> &inputWeights);
 	void UpdateNeuron(std::vector<double> inputVector);
 	void UpdateNeuron(double input);
+	double LimitWeight(double weight);
 private:
 	void GenerateInitialWeights();
 
