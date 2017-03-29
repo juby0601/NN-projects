@@ -47,7 +47,7 @@ void Runner::Training(){
 	}
 
 	cout << error << endl;
-	while ((previousError - error)>ERROR_THRESHOLD || (error-previousError) > ERROR_THRESHOLD){ 
+	while (error > ERROR_THRESHOLD){ 
 		Backpropogation(LERANING_RATE,errorVector);
 		errorVector = initializer;
 		RMSError = initializer;
