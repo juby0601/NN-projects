@@ -12,6 +12,7 @@ public:
 	void Training();
 	void Backpropogation(double learningRate, std::vector<Layer> &MLP, double error);
 	void Prediction(int time);
+	void printWeights();
 	~Runner();
 };
 

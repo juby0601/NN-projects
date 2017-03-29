@@ -125,6 +125,20 @@ void Runner::Prediction(int time){
 	cout << "Error in percentage: " << (data[1][WINDOW_SIZE+time-1] - predictedStockPrice[time])/data[1][WINDOW_SIZE+time-1]*100 << endl;
 }
 
+void Runner::printWeights(){
+	int numberOfWeights = 0;
+	for (unsigned int i = MLP.size()-1; i>(-1); i--){
+		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
+			for (unsigned int k = 0; k<MLP[i].GetNeuron(j).getWeights().size(); k++){
+				cout << MLP[i].GetNeuron(j).getWeights()[k] << " ";
+				numberOfWeights++;
+			}
+			cout << endl;
+		}
+	}
+	cout << numberOfWeights << endl;
+}
+
 Runner::~Runner()
 {
 }
