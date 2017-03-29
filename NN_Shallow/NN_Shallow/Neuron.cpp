@@ -79,3 +79,11 @@ double Neuron::LimitWeight(double weight){
 	}
 	return output;
 }
+
+double Neuron::GetWeightProduct() {
+	return weightProduct;
+}
+
+void Neuron::SetWeightProduct(double weight) {
+	weightProduct = weight;
+}

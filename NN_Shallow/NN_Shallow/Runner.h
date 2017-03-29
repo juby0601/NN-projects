@@ -7,7 +7,7 @@ class Runner
 private:
 	std::vector<Layer> MLP;
 	std::vector<std::vector<double> > data;
-	std::vector<double> GetRegressionFunction();
+	std::vector<double> PredictValues();
 	void Backpropogation(double learningRate, std::vector<double> error);
 	double SumVector(std::vector<double> &vector);
 public:

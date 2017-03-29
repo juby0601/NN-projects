@@ -118,23 +118,17 @@
   <ItemGroup>
     <ClCompile Include="..\NN_Shallow\DataIn.cpp" />
     <ClCompile Include="..\NN_Shallow\DataOut.cpp" />
-    <ClCompile Include="..\NN_Shallow\HiddenLayer.cpp" />
-    <ClCompile Include="..\NN_Shallow\Input.cpp" />
     <ClCompile Include="..\NN_Shallow\Layer.cpp" />
     <ClCompile Include="..\NN_Shallow\main.cpp" />
     <ClCompile Include="..\NN_Shallow\Neuron.cpp" />
-    <ClCompile Include="..\NN_Shallow\Output.cpp" />
     <ClCompile Include="..\NN_Shallow\Runner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\NN_Shallow\Config.h" />
     <ClInclude Include="..\NN_Shallow\DataIn.h" />
     <ClInclude Include="..\NN_Shallow\DataOut.h" />
-    <ClInclude Include="..\NN_Shallow\HiddenLayer.h" />
-    <ClInclude Include="..\NN_Shallow\Input.h" />
     <ClInclude Include="..\NN_Shallow\Layer.h" />
     <ClInclude Include="..\NN_Shallow\Neuron.h" />
-    <ClInclude Include="..\NN_Shallow\Output.h" />
     <ClInclude Include="..\NN_Shallow\Runner.h" />
   </ItemGroup>
   <ItemGroup>

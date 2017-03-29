@@ -7,6 +7,9 @@
 #include "DataOut.h"
 #include <cstddef>
 #include "Layer.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 
@@ -28,10 +31,10 @@ int main() {
 	Runner runner;
 	runner.Training();
 	//runner.printWeights();
-	runner.Prediction(1);
+	runner.Prediction(50);
 	//runner.printWeights();
 
-//	char exitInput;
-//	cin >> exitInput;
+	char exitInput;
+	cin >> exitInput;
 	return 0;
 };

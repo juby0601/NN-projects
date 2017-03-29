@@ -1,9 +1,15 @@
-﻿  main.cpp
-  DataOut.cpp
-  DataIn.cpp
+﻿  Runner.cpp
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\runner.cpp(100): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\runner.cpp(115): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\runner.cpp(131): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\runner.cpp(144): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\runner.cpp(179): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Compiling...
-  Runner.cpp
+  main.cpp
+d:\users\dariush\documents\github\nn-projects\nn_shallow\nn_shallow\main.cpp(17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Neuron.cpp
+  Layer.cpp
   Generating Code...
   NN_Shallow_VS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\NN_Shallow\Debug\NN_Shallow_VS.exe
   NN_Shallow_VS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\NN_Shallow\Debug\NN_Shallow_VS.pdb (Partial PDB)
