@@ -1,20 +1,6 @@
 ﻿<Properties StartupItem="NN_Shallow.cproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Runner.cpp">
-    <Files>
-      <File FileName="main.cpp" Line="1" Column="1" />
-      <File FileName="DataOut.h" Line="1" Column="1" />
-      <File FileName="DataOut.cpp" Line="1" Column="1" />
-      <File FileName="Runner.cpp" Line="105" Column="29" />
-      <File FileName="Neuron.cpp" Line="87" Column="30" />
-      <File FileName="Layer.cpp" Line="1" Column="1" />
-      <File FileName="Layer.h" Line="1" Column="1" />
-      <File FileName="Config.h" Line="1" Column="1" />
-      <File FileName="DataIn.h" Line="1" Column="1" />
-      <File FileName="Input.h" Line="1" Column="1" />
-      <File FileName="Runner.h" Line="3" Column="19" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
