@@ -30,13 +30,20 @@ int main() {
 
 	Runner runner;
 	runner.Training();
-	//runner.printWeights();
-	cout << "Real value: " << runner.getDesiredOutput(predictionT) << endl;
-	cout << "Predicted value: " << runner.PredictAValue(10) << endl;
-	cout << "Error: " << (runner.getDesiredOutput(predictionT)-runner.PredictAValue(10))/runner.getDesiredOutput(predictionT)*100 << endl;
-	//runner.printWeights();
+	runner.Prediction(SAMPLE_SIZE-TOTAL_WINDOW_SIZE);
+/*	for (int i = 0; i<5; i++){
 
-	char exitInput;
-	cin >> exitInput;
+	cout << "Real value: " << runner.getDesiredOutput(predictionT*i + predictionT) << endl;
+	cout << "Predicted value: " << runner.PredictAValue(predictionT*i + predictionT) << endl;
+	cout << "Error: " << (runner.getDesiredOutput(predictionT*i + predictionT)-runner.PredictAValue(predictionT*i + predictionT))/runner.getDesiredOutput(predictionT*i + predictionT)*100 << endl;
+	cout << endl;
+
+	}
+	*/
+
+
+
+	//char exitInput;
+	//cin >> exitInput;
 	return 0;
 };

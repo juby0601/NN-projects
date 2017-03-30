@@ -72,10 +72,10 @@ void Neuron::setWeights(vector<double> &inputWeights){
 
 double Neuron::LimitWeight(double weight){
 	double output;
-	if (weight > 1){
-		output = 1;
-	}else if (weight < -1){
-		output = -1;
+	if (weight > WEIGHT_MAX){
+		output = WEIGHT_MAX;
+	}else if (weight < WEIGHT_MIN){
+		output = WEIGHT_MIN;
 	}else{
 		output = weight;
 	}

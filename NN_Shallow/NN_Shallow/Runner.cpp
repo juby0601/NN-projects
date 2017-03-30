@@ -63,12 +63,6 @@ double Runner::PredictAValue(int k){
 		MLP.at(i).ComputeOutputs();
 	}
 
-	if ((MLP.at(MLP.size() - 1).GetOutput().at(0)) < -2384901) {
-		getNumberOfWeights();
-		char trala;
-		cin >> trala;
-	}
-
 	return (MLP.at(MLP.size() - 1).GetOutput().at(0));
 }
 
@@ -100,25 +94,25 @@ void Runner::Backpropogation(double learningRate, double error){
 	vector<double> weightTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
-
+	int deltaWeightCounter = 0;
 	// Loop through layers
 	for (int i = MLP.size()-1; i>=0; i--){
 		// Loop through neurons in each layer
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
 			if (i == (MLP.size()-1)){
-				MLP[i].GetNeuron(j).SetWeightProduct(1.0);
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[k] = learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[k];
-					weightTemp[k] += deltaWeights[k];
+					deltaWeights[deltaWeightCounter] = learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
+					weightTemp[k] += deltaWeights[deltaWeightCounter];
 					errorSumTemp += weightTemp[k]*error;
+					deltaWeightCounter++;
 				}
 			}else{
-				MLP[i].GetNeuron(j).SetWeightProduct(0.0);
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[k] = learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[k];
-					weightTemp[k] += deltaWeights[k];
+					deltaWeights[deltaWeightCounter] = learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[deltaWeightCounter];
+					weightTemp[k] += deltaWeights[deltaWeightCounter];
 					errorSumTemp += weightTemp[k]*errorSum;
+					deltaWeightCounter++;
 				}
 			}
 			MLP[i].GetNeuron(j).setWeights(weightTemp);
@@ -156,14 +150,23 @@ void Runner::Prediction(int time){
 		}
 		predictedStockPriceChange.push_back(MLP.at(3).GetOutput().at(0));
 		predictedStockPrice.push_back(predictedStockPriceChange[i]*predictedStockPrice[i]+predictedStockPrice[i]);
-	}
 
+	cout << "Prediction" << endl;
+	cout << "Real value: " << data[1][TOTAL_WINDOW_SIZE+i] << endl;
+	cout << "Predicted value: " << predictedStockPrice[i+1] << endl;
+	cout << "Difference: " << data[1][TOTAL_WINDOW_SIZE+i] - predictedStockPrice[i] << endl;
+	cout << "Error in percentage: " << (data[1][TOTAL_WINDOW_SIZE+i] - predictedStockPrice[i+1])/data[1][TOTAL_WINDOW_SIZE+i]*100 << endl;
+	cout << endl;
+
+	}
+	/*
 	cout << "Prediction" << endl;
 	cout << "Real value: " << data[1][TOTAL_WINDOW_SIZE+time-1] << endl;
 	cout << "Predicted value: " << predictedStockPrice[time] << endl;
 	cout << "Difference: " << data[1][TOTAL_WINDOW_SIZE+time-1] - predictedStockPrice[time] << endl;
 	cout << "Error in percentage: " << (data[1][TOTAL_WINDOW_SIZE+time-1] - predictedStockPrice[time])/data[1][TOTAL_WINDOW_SIZE+time-1]*100 << endl;
 	cout << endl;
+	*/
 }
 
 int Runner::getNumberOfWeights(){
