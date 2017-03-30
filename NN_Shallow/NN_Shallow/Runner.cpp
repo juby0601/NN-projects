@@ -25,8 +25,11 @@ Runner::Runner()
 		if (i == NUMBER_OF_LAYERS-1){
 			MLP.at(i).Init(1,MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
+		}else if (i == NUMBER_OF_LAYERS-2){
+			MLP.at(i).Init(SECOND_HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
+			MLP.at(i).ComputeOutputs();
 		}else{
-			MLP.at(i).Init(HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
+			MLP.at(i).Init(FIRST_HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
 		}
 	}
@@ -43,7 +46,7 @@ void Runner::Training(){
 			error += 0.5*(data[2][WINDOW_SIZE+i]-predictedValue)*(data[2][WINDOW_SIZE+i]-predictedValue);
 			Backpropogation(LERANING_RATE,data[2][WINDOW_SIZE+i]-predictedValue);
 		}
-		cout << error << endl;
+		//cout << error << endl;
 	}
 
 	cout << "Finished training" << endl;
