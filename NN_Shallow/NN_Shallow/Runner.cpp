@@ -46,7 +46,7 @@ void Runner::Training(){
 			error += 0.5*(data[2][WINDOW_SIZE+i]-predictedValue)*(data[2][WINDOW_SIZE+i]-predictedValue);
 			Backpropogation(LERANING_RATE,data[2][WINDOW_SIZE+i]-predictedValue);
 		}
-		//cout << error << endl;
+		cout << "RMS: " <<error << endl;
 	}
 
 	cout << "Finished training" << endl;
