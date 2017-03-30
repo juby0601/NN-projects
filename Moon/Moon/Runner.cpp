@@ -60,10 +60,11 @@ void Runner::Training(){
 }
 
 double Runner::PredictAValue(int k){
-	vector<double> coordinates;
+	vector<double> coordinates(NUMBER_OF_INPUTS);
 	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
-		coordinates.push_back(data[j][k]);
+		coordinates[j] = data[j][k];
 	}
+
 	MLP.at(0).UpdateInputLayer(coordinates);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
@@ -74,14 +75,14 @@ double Runner::PredictAValue(int k){
 }
 
 vector<double> Runner::PredictValues(int start, int end) {
-	vector<double> coordinates(2);
+	vector<double> coordinates(NUMBER_OF_INPUTS);
 	vector<double> predictedValues;
 	double output;
 
 	for (unsigned int k = start; k<end; k++){
 
-		coordinates[1] = data[0][k];
-		coordinates[2] = data[1][k];
+		coordinates[0] = data[0][k];
+		coordinates[1] = data[1][k];
 								
 		MLP.at(0).UpdateInputLayer(coordinates);
 		MLP.at(0).ComputeOutputs();
@@ -91,11 +92,10 @@ vector<double> Runner::PredictValues(int start, int end) {
 			MLP.at(i).ComputeOutputs();
 		}
 		output = MLP.at(MLP.size() - 1).GetOutput().at(0);
-		cout << output << endl;
-		if (output > 0){
+		if (output > 0.5){
 			predictedValues.push_back(1);
 		}else{
-			predictedValues.push_back(-1);
+			predictedValues.push_back(0);
 		}
 	}
 	return predictedValues;
