@@ -8,14 +8,14 @@ private:
 	std::vector<Layer> MLP;
 	std::vector<std::vector<double> > data;
 	std::vector<double> deltaWeights;
-	std::vector<double> PredictValues();
-	void Backpropogation(double learningRate, double error);
+	void Backpropogation(double learningRate, double error, double out);
 	int getNumberOfWeights();
+	void Normalization();
 public:
 	Runner();
 	double PredictAValue(int k);
+	std::vector<double> PredictValues(int start, int end);
 	void Training();
-	void Prediction(int time);
 	double getDesiredOutput(int k);
 	~Runner();
 };

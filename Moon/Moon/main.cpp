@@ -14,23 +14,19 @@ using namespace std;
 int main() {
 	srand (time(NULL));
 
-	/*
-	string nameOfTheFile = "two_moon.txt";
-	DataIn dataIn(nameOfTheFile);
-	vector< vector<double> >data = dataIn.GetData();
+	Runner runner;
 
-	for (int i = 0; i<data[1].size(); i++){
-		for (int j = 0; j<3; j++){
-			cout << data[j][i] << "			";
+	runner.Training();
+	int errorCounter = 0;
+	vector<double> prediction = runner.PredictValues(TOTAL_WINDOW_SIZE,SAMPLE_SIZE);
+	for (int i = 0; i<prediction.size(); i++){
+		cout << "Predicted class: " << prediction[i] << "  vs  ";
+		cout << "Real class: " << runner.getDesiredOutput(i) << endl;
+		if (prediction[i] != runner.getDesiredOutput(i)){
+			errorCounter++;
 		}
-		cout << endl;
-	}*/
+	}
+	cout << "Total number of errors:  " << errorCounter << endl;
 
-	//Runner runner;
-	//runner.Training();
-	//runner.Prediction(SAMPLE_SIZE-TOTAL_WINDOW_SIZE);
-
-	//char exitInput;
-	//cin >> exitInput;
 	return 0;
 };

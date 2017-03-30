@@ -13,11 +13,13 @@ Runner::Runner()
 	string nameOfTheFile = "two_moon.txt";
 	DataIn dataIn(nameOfTheFile);
 	data = dataIn.GetData();
-	vector<double> stockPriceInput;
-	for (unsigned int i = 0; i < WINDOW_SIZE; i++){
-		stockPriceInput.push_back(data[2][i]);
+	Normalization();
+
+	vector<double> coordinates;
+	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
+		coordinates.push_back(data[i][0]);
 	}
-	MLP.at(0).InitInputlayer(WINDOW_SIZE, stockPriceInput);
+	MLP.at(0).InitInputlayer(NUMBER_OF_INPUTS, coordinates);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		if (i == NUMBER_OF_LAYERS-1){
@@ -34,67 +36,79 @@ Runner::Runner()
 	deltaWeights.resize(getNumberOfWeights());
 }
 
+void Runner::Normalization(){
+	for (int i = 0; i < data[0].size(); i++){
+		data[0][i] = (data[0][i] + XOFFSET)/XSCALE;
+		data[1][i] = (data[1][i] + YOFFSET)/YSCALE;
+		if (data[2][i] == 0){
+			data[2][i] = -1;
+		}
+	}
+}
+
 void Runner::Training(){
-	double predictedValue;
+	double predictedClass;
 	double error = 0;
 	for (unsigned int f = 0; f < EPOCHS; f++){ 
 		error = 0;
-		for (unsigned int i = 0; i < TOTAL_WINDOW_SIZE-WINDOW_SIZE; i++){
-			predictedValue = PredictAValue(i);
-			error += 0.5*(data[2][WINDOW_SIZE+i]-predictedValue)*(data[2][WINDOW_SIZE+i]-predictedValue);
-			Backpropogation(LERANING_RATE,data[2][WINDOW_SIZE+i]-predictedValue);
+		for (unsigned int i = 0; i < TOTAL_WINDOW_SIZE; i++){
+			predictedClass = PredictAValue(i);
+			error += 0.5*(data[2][i]-predictedClass)*(data[2][i]-predictedClass);
+			Backpropogation(LERANING_RATE,data[2][i]-predictedClass, predictedClass);
 		}
 		cout << "RMS: " <<error << endl;
 	}
-
 	cout << "Finished training" << endl;
 	cout << endl;
 }
 
 double Runner::PredictAValue(int k){
-	vector<double> stockPriceInput;
-	for (unsigned int j = 0; j < WINDOW_SIZE; j++){
-		stockPriceInput.push_back(data[2][j+k]);
+	vector<double> coordinates;
+	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
+		coordinates.push_back(data[j][k]);
 	}
-	MLP.at(0).UpdateInputLayer(stockPriceInput);
+	MLP.at(0).UpdateInputLayer(coordinates);
 	MLP.at(0).ComputeOutputs();
-
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
-
 	return (MLP.at(MLP.size() - 1).GetOutput().at(0));
 }
 
-vector<double> Runner::PredictValues() {
-	vector<double> stockPriceInput;
-	vector<double> initializer;
+vector<double> Runner::PredictValues(int start, int end) {
+	vector<double> coordinates(2);
 	vector<double> predictedValues;
+	double output;
 
-	for (unsigned int k = 0; k<TOTAL_WINDOW_SIZE-WINDOW_SIZE; k++){
+	for (unsigned int k = start; k<end; k++){
 
-		stockPriceInput = initializer;
-		for (unsigned int j = 0; j < WINDOW_SIZE; j++){
-			stockPriceInput.push_back(data[2][j+k]);
-		}
+		coordinates[1] = data[0][k];
+		coordinates[2] = data[1][k];
 								
-		MLP.at(0).UpdateInputLayer(stockPriceInput);
+		MLP.at(0).UpdateInputLayer(coordinates);
 		MLP.at(0).ComputeOutputs();
 
 		for (unsigned int i = 1; i<MLP.size(); i++){
 			MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
 		}
-		predictedValues.push_back(MLP.at(MLP.size() - 1).GetOutput().at(0));
+		output = MLP.at(MLP.size() - 1).GetOutput().at(0);
+		cout << output << endl;
+		if (output > 0){
+			predictedValues.push_back(1);
+		}else{
+			predictedValues.push_back(-1);
+		}
 	}
 	return predictedValues;
 }
 
-void Runner::Backpropogation(double learningRate, double error){
+void Runner::Backpropogation(double learningRate, double error, double out){
 	vector<double> weightTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
+	double output = out;
 	int deltaWeightCounter = 0;
 	// Loop through layers
 	for (int i = MLP.size()-1; i>=0; i--){
@@ -103,16 +117,17 @@ void Runner::Backpropogation(double learningRate, double error){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
 			if (i == (MLP.size()-1)){
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
+					deltaWeights[deltaWeightCounter] = (1-output*output)*learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*error;
+					errorSumTemp += weightTemp[k]*error*(1-output*output);
 					deltaWeightCounter++;
 				}
 			}else{
+				output = MLP[i].GetOutput()[j];
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[deltaWeightCounter];
+					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*errorSum;
+					errorSumTemp += weightTemp[k]*errorSum*(1-output*output);
 					deltaWeightCounter++;
 				}
 			}
@@ -121,53 +136,6 @@ void Runner::Backpropogation(double learningRate, double error){
 		errorSum = errorSumTemp;
 		errorSumTemp = 0;
 	}
-}
-
-void Runner::Prediction(int time){
-	vector<double> initializer;
-	vector<double> stockPriceInput;
-	vector<double> predictedStockPriceChange;
-	vector<double> predictedStockPrice;
-	predictedStockPrice.push_back(data[1][TOTAL_WINDOW_SIZE-1]);
-	for (unsigned int i = 0; i<time; i++){
-		int counter = 0;
-		for (unsigned int j = 0; j < TOTAL_WINDOW_SIZE; j++){
-			if (j+i < TOTAL_WINDOW_SIZE){
-				stockPriceInput.push_back(data[2][j+i]);
-			}else if (i > TOTAL_WINDOW_SIZE){
-				stockPriceInput.push_back(predictedStockPriceChange[counter+(i-TOTAL_WINDOW_SIZE)]);
-				counter++;
-			}else{
-				stockPriceInput.push_back(predictedStockPriceChange[counter]);
-				counter++;
-			}
-		}
-		MLP.at(0).UpdateInputLayer(stockPriceInput);
-		MLP.at(0).ComputeOutputs();
-		stockPriceInput = initializer;
-		for (unsigned int k = 1; k<MLP.size(); k++){
-			MLP.at(k).UpdateLayer(MLP.at(k-1).GetOutput());
-			MLP.at(k).ComputeOutputs();
-		}
-		predictedStockPriceChange.push_back(MLP.at(3).GetOutput().at(0));
-		predictedStockPrice.push_back(predictedStockPriceChange[i]*predictedStockPrice[i]+predictedStockPrice[i]);
-
-	cout << "Prediction" << endl;
-	cout << "Real value: " << data[1][TOTAL_WINDOW_SIZE+i] << endl;
-	cout << "Predicted value: " << predictedStockPrice[i+1] << endl;
-	cout << "Difference: " << data[1][TOTAL_WINDOW_SIZE+i] - predictedStockPrice[i] << endl;
-	cout << "Error in percentage: " << (data[1][TOTAL_WINDOW_SIZE+i] - predictedStockPrice[i+1])/data[1][TOTAL_WINDOW_SIZE+i]*100 << endl;
-	cout << endl;
-
-	}
-	/*
-	cout << "Prediction" << endl;
-	cout << "Real value: " << data[1][TOTAL_WINDOW_SIZE+time-1] << endl;
-	cout << "Predicted value: " << predictedStockPrice[time] << endl;
-	cout << "Difference: " << data[1][TOTAL_WINDOW_SIZE+time-1] - predictedStockPrice[time] << endl;
-	cout << "Error in percentage: " << (data[1][TOTAL_WINDOW_SIZE+time-1] - predictedStockPrice[time])/data[1][TOTAL_WINDOW_SIZE+time-1]*100 << endl;
-	cout << endl;
-	*/
 }
 
 int Runner::getNumberOfWeights(){
@@ -185,8 +153,10 @@ int Runner::getNumberOfWeights(){
 	return numberOfWeights;
 }
 
+
 double Runner::getDesiredOutput(int k){
-	return data[2][WINDOW_SIZE+k];
+	return data[2][TOTAL_WINDOW_SIZE+k];
 }
+
 
 Runner::~Runner(){}

@@ -1,5 +1,6 @@
 #include "Config.h"
 #include "Neuron.h"
+#include <math.h>
 #include <iostream>
 
 using namespace std;
@@ -14,7 +15,6 @@ void Neuron::Init(std::vector<double> &inputVector) {
 	inputs = inputVector;
 	weights.resize(inputVector.size());
 	product.resize(inputVector.size());
-
 	GenerateInitialWeights();
 }
 
@@ -42,13 +42,20 @@ double Neuron::ComputeOutput() {
 	for (unsigned int i = 0; i < product.size(); i++) {
 		product.at(i) = weights.at(i) * inputs.at(i);
 	}
-	return Sum(product);
+	return ActivationFunction(Sum(product));
+}
+
+double Neuron::ActivationFunction(double input){
+	//sigmoid
+	double output;
+	output = 2/(1+exp(-2*input))-1;
+	return output;
 }
 
 void Neuron::GenerateInitialWeights() {
 	for (unsigned int i = 0; i < weights.size(); i++) {
-		double r = ((double) rand() / (RAND_MAX));
-		weights.at(i) = WEIGHT_SCALE * (r*2-1);
+		double r = ((double) rand() / (RAND_MAX))*2-1;
+		weights.at(i) = WEIGHT_SCALE * r;
 	}
 }
 
@@ -68,24 +75,4 @@ void Neuron::setWeights(vector<double> &inputWeights){
 	for (int i = 1; i<inputWeights.size(); i++){
 		weights[i] = inputWeights[i];
 	}
-}
-
-double Neuron::LimitWeight(double weight){
-	double output;
-	if (weight > WEIGHT_MAX){
-		output = WEIGHT_MAX;
-	}else if (weight < WEIGHT_MIN){
-		output = WEIGHT_MIN;
-	}else{
-		output = weight;
-	}
-	return output;
-}
-
-double Neuron::GetWeightProduct() {
-	return weightProduct;
-}
-
-void Neuron::SetWeightProduct(double weight) {
-	weightProduct = weight;
 }
