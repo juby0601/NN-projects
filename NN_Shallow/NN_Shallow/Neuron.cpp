@@ -65,7 +65,9 @@ vector<double> Neuron::getWeights(){
 }
 
 void Neuron::setWeights(vector<double> &inputWeights){
-	weights = inputWeights;
+	for (int i = 1; i<inputWeights.size(); i++){
+		weights[i] = LimitWeight(inputWeights[i]);
+	}
 }
 
 double Neuron::LimitWeight(double weight){

@@ -10,12 +10,12 @@ private:
 	std::vector<double> deltaWeights;
 	std::vector<double> PredictValues();
 	void Backpropogation(double learningRate, double error);
+	int getNumberOfWeights();
 public:
 	Runner();
 	double PredictAValue(int k);
 	void Training();
 	void Prediction(int time);
-	int printWeights();
 	double getDesiredOutput(int k);
 	~Runner();
 };

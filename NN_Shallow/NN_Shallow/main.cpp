@@ -33,6 +33,7 @@ int main() {
 	//runner.printWeights();
 	cout << "Real value: " << runner.getDesiredOutput(predictionT) << endl;
 	cout << "Predicted value: " << runner.PredictAValue(10) << endl;
+	cout << "Error: " << (runner.getDesiredOutput(predictionT)-runner.PredictAValue(10))/runner.getDesiredOutput(predictionT)*100 << endl;
 	//runner.printWeights();
 
 	char exitInput;

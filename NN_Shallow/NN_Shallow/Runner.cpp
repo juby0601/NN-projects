@@ -30,7 +30,7 @@ Runner::Runner()
 			MLP.at(i).ComputeOutputs();
 		}
 	}
-	deltaWeights.resize(printWeights());
+	deltaWeights.resize(getNumberOfWeights());
 }
 
 void Runner::Training(){
@@ -62,6 +62,13 @@ double Runner::PredictAValue(int k){
 		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
+
+	if ((MLP.at(MLP.size() - 1).GetOutput().at(0)) < -2384901) {
+		getNumberOfWeights();
+		char trala;
+		cin >> trala;
+	}
+
 	return (MLP.at(MLP.size() - 1).GetOutput().at(0));
 }
 
@@ -91,7 +98,6 @@ vector<double> Runner::PredictValues() {
 
 void Runner::Backpropogation(double learningRate, double error){
 	vector<double> weightTemp;
-	vector<double> inputTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
 
@@ -160,7 +166,7 @@ void Runner::Prediction(int time){
 	cout << endl;
 }
 
-int Runner::printWeights(){
+int Runner::getNumberOfWeights(){
 	int numberOfWeights = 0;
 	for (int i = MLP.size()-1; i>=0; i--){
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
