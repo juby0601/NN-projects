@@ -3,85 +3,47 @@ using namespace std;
 
 DataIn::DataIn(string &input)
 {
-	vector<double> dateVector;
-	vector<double> stockPriceVector;
+	vector<double> xCoor;
+	vector<double> yCoor;
+	vector<double> classNr;
 	string line;
-	ifstream stockPriceInfo;
-	int yearI, monthI, dayI, yearIStart, monthIStart, dayIStart;
-    int stockpriceInt;
-    string date,year,month,day;
-    string stockprice;
+	ifstream moonData;
+
+	double xCoorDouble, yCoorDouble, classNrDouble;
+    string xCoorString,yCoorString,classNrString;
 
 	int numberOfIterations = 1;
-	stockPriceInfo.open(input.c_str());
-	if (stockPriceInfo.is_open()){
-    	while ( getline (stockPriceInfo,line) ){
+	moonData.open(input.c_str());
+
+	if (moonData.is_open()){
+    	while ( getline (moonData,line) ){
     		stringstream sentence(line);
-      		sentence >> date;
 
-      		stringstream dateSS(date);
-      		getline(dateSS,year,'.');
-      		getline(dateSS,month,'.');
-      		getline(dateSS,day,'.');
+    		if (numberOfIterations > 4){
+	      		sentence >> xCoorString;
+	      		xCoorDouble = atof(xCoorString.c_str());
 
-      		sentence >> stockprice;
-      		stockprice.erase(remove(stockprice.begin(), stockprice.end(), ','), stockprice.end());
+	      		sentence >> yCoorString;
+	      		yCoorDouble = atof(yCoorString.c_str());
 
-      		//String to int
-      		stringstream converterYear(year);
-      		converterYear>>yearI;
-      		stringstream converterMonth(month);
-      		converterMonth>>monthI;
-      		stringstream converterDay(day);
-      		converterDay>>dayI;
+	      		sentence >> classNrString;
+	      		classNrDouble = atof(classNrString.c_str());
 
-      		stringstream converterStockPrice(stockprice);
-      		converterStockPrice>>stockpriceInt;
-
-      		if (numberOfIterations == 1){
-      			dateVector.push_back(0);
-      			yearIStart = yearI;
-      			monthIStart = monthI;
-      			dayIStart = dayI;
-      		}else{
-      			int differenceInDate = NumberOfDays(yearI,monthI,dayI) - NumberOfDays(yearIStart,monthIStart,dayIStart); 
-      			dateVector.push_back(differenceInDate);
+	      		xCoor.push_back(xCoorDouble);
+	      		yCoor.push_back(yCoorDouble);
+	      		classNr.push_back(classNrDouble);
       		}
-      		stockPriceVector.push_back(stockpriceInt);
-
       		numberOfIterations++;
     	}
-    stockPriceInfo.close();
+    moonData.close();
   	}else{
   		cout << "Failed to open the file about stock price" << endl;
   	}
 
-  	data.push_back(dateVector);
-  	data.push_back(stockPriceVector);
-  	PercentageChanges();
+  	data.push_back(xCoor);
+  	data.push_back(yCoor);
+  	data.push_back(classNr);
 }
 
-int DataIn::NumberOfDays(int year, int month, int day){
-	if (month < 3)
-		year--, month += 12;
-	return 365*year + year/4 - year/100 + year/400 + (153*month - 457)/5 + day - 306;
-}
 
-void DataIn::PercentageChanges(){
-	vector<double> percentage;
-	double changeInPercentage;
-	for (unsigned int i = 0; i < data[1].size(); i++) {
-		if (i==0){
-			percentage.push_back(0);
-		}else{
-			changeInPercentage = (data[1][i] - data[1][i-1])/data[1][i-1];
-			percentage.push_back(changeInPercentage);
-		}
-	}
-	data.push_back(percentage);
-}
-
-DataIn::~DataIn()
-{
-	
-}
+DataIn::~DataIn(){}

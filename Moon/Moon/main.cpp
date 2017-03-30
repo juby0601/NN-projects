@@ -14,9 +14,21 @@ using namespace std;
 int main() {
 	srand (time(NULL));
 
-	Runner runner;
-	runner.Training();
-	runner.Prediction(SAMPLE_SIZE-TOTAL_WINDOW_SIZE);
+	/*
+	string nameOfTheFile = "two_moon.txt";
+	DataIn dataIn(nameOfTheFile);
+	vector< vector<double> >data = dataIn.GetData();
+
+	for (int i = 0; i<data[1].size(); i++){
+		for (int j = 0; j<3; j++){
+			cout << data[j][i] << "			";
+		}
+		cout << endl;
+	}*/
+
+	//Runner runner;
+	//runner.Training();
+	//runner.Prediction(SAMPLE_SIZE-TOTAL_WINDOW_SIZE);
 
 	//char exitInput;
 	//cin >> exitInput;

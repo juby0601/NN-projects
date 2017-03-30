@@ -1,1 +1,13 @@
-﻿<Properties StartupItem="Moon/Moon.cproj" />
+﻿<Properties StartupItem="Moon/Moon.cproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Moon/Runner.cpp">
+    <Files>
+      <File FileName="Moon/main.cpp" Line="18" Column="11" />
+      <File FileName="Moon/Runner.cpp" Line="27" Column="25" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
