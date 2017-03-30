@@ -40,9 +40,6 @@ void Runner::Normalization(){
 	for (int i = 0; i < data[0].size(); i++){
 		data[0][i] = (data[0][i] + XOFFSET)/XSCALE;
 		data[1][i] = (data[1][i] + YOFFSET)/YSCALE;
-		if (data[2][i] == 0){
-			data[2][i] = -1;
-		}
 	}
 }
 
@@ -117,9 +114,9 @@ void Runner::Backpropogation(double learningRate, double error, double out){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
 			if (i == (MLP.size()-1)){
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = (1-output*output)*learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
+					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*error*(1-output*output);
+					errorSumTemp += weightTemp[k]*error*output*(1-output);
 					deltaWeightCounter++;
 				}
 			}else{
@@ -127,7 +124,7 @@ void Runner::Backpropogation(double learningRate, double error, double out){
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
 					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*errorSum*(1-output*output);
+					errorSumTemp += weightTemp[k]*errorSum*output*(1-output);
 					deltaWeightCounter++;
 				}
 			}

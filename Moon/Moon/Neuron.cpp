@@ -48,7 +48,7 @@ double Neuron::ComputeOutput() {
 double Neuron::ActivationFunction(double input){
 	//sigmoid
 	double output;
-	output = 2/(1+exp(-2*input))-1;
+	output = 1/(1+exp(-input));
 	return output;
 }
 
