@@ -15,7 +15,7 @@ using namespace std;
 
 int main() {
 	srand (time(NULL));
-
+	int predictionT = 10;
 	/*
 	string nameOfTheFile = "StockPrice.txt";
 	DataIn dataIn(nameOfTheFile);
@@ -31,7 +31,8 @@ int main() {
 	Runner runner;
 	runner.Training();
 	//runner.printWeights();
-	runner.Prediction(50);
+	cout << "Real value: " << runner.getDesiredOutput(predictionT) << endl;
+	cout << "Predicted value: " << runner.PredictAValue(10) << endl;
 	//runner.printWeights();
 
 	char exitInput;

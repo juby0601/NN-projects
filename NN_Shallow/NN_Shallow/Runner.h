@@ -7,14 +7,16 @@ class Runner
 private:
 	std::vector<Layer> MLP;
 	std::vector<std::vector<double> > data;
+	std::vector<double> deltaWeights;
 	std::vector<double> PredictValues();
-	void Backpropogation(double learningRate, std::vector<double> error);
-	double SumVector(std::vector<double> &vector);
+	void Backpropogation(double learningRate, double error);
 public:
 	Runner();
+	double PredictAValue(int k);
 	void Training();
 	void Prediction(int time);
-	void printWeights();
+	int printWeights();
+	double getDesiredOutput(int k);
 	~Runner();
 };
 

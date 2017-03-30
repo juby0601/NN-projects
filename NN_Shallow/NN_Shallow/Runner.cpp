@@ -30,38 +30,39 @@ Runner::Runner()
 			MLP.at(i).ComputeOutputs();
 		}
 	}
+	deltaWeights.resize(printWeights());
 }
 
 void Runner::Training(){
-	vector<double> predictedValues = PredictValues();
-	vector<double> errorVector;
-	vector<double> rmsError;
-
+	double predictedValue;
 	double error = 0;
-	double previousError = 5000;
-	for (unsigned int i = 0; i < predictedValues.size(); i++){
-		errorVector.push_back(data[2][WINDOW_SIZE+i]-predictedValues[i]);
-		rmsError.push_back(0.5*(data[2][WINDOW_SIZE+i]-predictedValues[i])*(data[2][WINDOW_SIZE+i]-predictedValues[i]));
-		error = SumVector(rmsError);
-	}
-
-	cout << error << endl;
-	while (error > ERROR_THRESHOLD){ 
-		Backpropogation(LERANING_RATE,errorVector);
-		errorVector.clear();
-		rmsError.clear();
-		predictedValues = PredictValues();
-		for (unsigned int i = 0; i < predictedValues.size(); i++){
-			errorVector.push_back(data[2][WINDOW_SIZE+i]-predictedValues[i]);
-			rmsError.push_back(0.5*(data[2][WINDOW_SIZE+i]-predictedValues[i])*(data[2][WINDOW_SIZE+i]-predictedValues[i]));
-			previousError = error;
-			error = SumVector(rmsError);
+	for (unsigned int f = 0; f < EPOCHS; f++){ 
+		error = 0;
+		for (unsigned int i = 0; i < TOTAL_WINDOW_SIZE-WINDOW_SIZE; i++){
+			predictedValue = PredictAValue(i);
+			error += 0.5*(data[2][WINDOW_SIZE+i]-predictedValue)*(data[2][WINDOW_SIZE+i]-predictedValue);
+			Backpropogation(LERANING_RATE,data[2][WINDOW_SIZE+i]-predictedValue);
 		}
 		cout << error << endl;
 	}
 
 	cout << "Finished training" << endl;
 	cout << endl;
+}
+
+double Runner::PredictAValue(int k){
+	vector<double> stockPriceInput;
+	for (unsigned int j = 0; j < WINDOW_SIZE; j++){
+		stockPriceInput.push_back(data[2][j+k]);
+	}
+	MLP.at(0).UpdateInputLayer(stockPriceInput);
+	MLP.at(0).ComputeOutputs();
+
+	for (unsigned int i = 1; i<MLP.size(); i++){
+		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
+		MLP.at(i).ComputeOutputs();
+	}
+	return (MLP.at(MLP.size() - 1).GetOutput().at(0));
 }
 
 vector<double> Runner::PredictValues() {
@@ -88,52 +89,36 @@ vector<double> Runner::PredictValues() {
 	return predictedValues;
 }
 
-void Runner::Backpropogation(double learningRate, vector<double> error){
-	vector< vector<double> > weightTemps;
+void Runner::Backpropogation(double learningRate, double error){
 	vector<double> weightTemp;
 	vector<double> inputTemp;
+	double errorSum = 0;
+	double errorSumTemp = 0;
 
 	// Loop through layers
-	for (unsigned int i = MLP.size()-1; i>0; i--){
-
+	for (int i = MLP.size()-1; i>=0; i--){
 		// Loop through neurons in each layer
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
-			
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
-			inputTemp = MLP[i].GetInput();
-			
 			if (i == (MLP.size()-1)){
-				MLP[i].GetNeuron(j).SetWeightProduct(1);
+				MLP[i].GetNeuron(j).SetWeightProduct(1.0);
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					weightTemp[k] += learningRate*inputTemp[k]*SumVector(error);
+					deltaWeights[k] = learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[k];
+					weightTemp[k] += deltaWeights[k];
+					errorSumTemp += weightTemp[k]*error;
 				}
 			}else{
-				MLP[i].GetNeuron(j).SetWeightProduct(0);
-
-				// Loop through each connection going out of each neuron
-				for (unsigned int t = 0; t<MLP[i + 1].LayerSize() - 1; t++) {
-
-					// TODO: change eroor to be value instead of vector
-					//weightTemp[k] += learningRate*SumVector(error)*inputTemp[k] * MLP[i + 1].GetNeuron(t).getWeights()[j];
-					MLP[i].GetNeuron(j).SetWeightProduct(MLP[i].GetNeuron(j).GetWeightProduct() + MLP[i + 1].GetNeuron(t).getWeights()[j] * MLP[i + 1].GetNeuron(t).GetWeightProduct());
-				}
-
-				// Loop through weights going into each neuron
+				MLP[i].GetNeuron(j).SetWeightProduct(0.0);
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					weightTemp[k] += learningRate*SumVector(error)*inputTemp[k] * MLP[i].GetNeuron(j).GetWeightProduct();
+					deltaWeights[k] = learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[k];
+					weightTemp[k] += deltaWeights[k];
+					errorSumTemp += weightTemp[k]*errorSum;
 				}
 			}
-			
-			weightTemps.push_back(weightTemp);
+			MLP[i].GetNeuron(j).setWeights(weightTemp);
 		}
-	}
-
-	int weightCounter = 0;
-	for (unsigned int i = MLP.size()-1; i>0; i--){
-		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
-			MLP[i].GetNeuron(j).setWeights(weightTemps[weightCounter]);
-			weightCounter++;
-		}
+		errorSum = errorSumTemp;
+		errorSumTemp = 0;
 	}
 }
 
@@ -175,9 +160,9 @@ void Runner::Prediction(int time){
 	cout << endl;
 }
 
-void Runner::printWeights(){
+int Runner::printWeights(){
 	int numberOfWeights = 0;
-	for (unsigned int i = MLP.size()-1; i>0; i--){
+	for (int i = MLP.size()-1; i>=0; i--){
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
 			for (unsigned int k = 0; k<MLP[i].GetNeuron(j).getWeights().size(); k++){
 				cout << MLP[i].GetNeuron(j).getWeights()[k] << " ";
@@ -187,14 +172,11 @@ void Runner::printWeights(){
 		}
 	}
 	cout << numberOfWeights << endl;
+	return numberOfWeights;
 }
 
-double Runner::SumVector(std::vector<double> &vector) {
-	double sum = 0;
-	for (unsigned int i = 0; i < vector.size(); i++) {
-		sum += vector.at(i);
-	}
-	return sum;
+double Runner::getDesiredOutput(int k){
+	return data[2][WINDOW_SIZE+k];
 }
 
 Runner::~Runner(){}
