@@ -74,6 +74,15 @@ DataIn::DataIn() {
 			dataImages.at(typeData5 - 1).at(dataImages.at(typeData5 - 1).size() - 1).at((i - ((i + 1) % TOTAL_VALUES_PER_IMAGE)) % PIXELS_PER_COLOR_PER_IMAGE) += bufferData5.at(i);*/
 		}
 	}
+
+	// Limit pixel values to be between 0 and 1
+	for (int i = 0; i < TOTAL_NUMBER_OF_CLASSES; i++) {
+		for (int j = 0; j < dataImages.at(i).size(); j++) {
+			for (int k = 0; k < PIXELS_PER_COLOR_PER_IMAGE; k++) {
+				dataImages.at(i).at(j).at(k) /= 765;
+			}
+		}
+	}
 }
 
 
