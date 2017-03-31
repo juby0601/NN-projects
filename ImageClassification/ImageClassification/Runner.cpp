@@ -6,12 +6,11 @@
 
 using namespace std;
 
-Runner::Runner()
-{
+Runner::Runner() {
+
 	MLP.resize(NUMBER_OF_LAYERS);
-	string nameOfTheFile = "two_moon.txt";
-	DataIn dataIn(nameOfTheFile);
-	data = dataIn.GetData();
+	DataIn dataIn;
+
 	Normalization();
 
 	vector<double> coordinates;
