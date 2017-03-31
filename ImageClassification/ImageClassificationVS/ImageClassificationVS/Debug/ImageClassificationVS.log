@@ -1,4 +1,5 @@
 ﻿  DataIn.cpp
-d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(55): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(80): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(99): warning C4018: '<': signed/unsigned mismatch
   ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.exe
   ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.pdb (Partial PDB)

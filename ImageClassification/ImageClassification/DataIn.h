@@ -16,6 +16,9 @@ public:
 	void PercentageChanges();*/
 
 private:
+	void ReadData(std::string fileName);
+	void LimitInput();
 
+	std::vector<std::vector<std::vector<double>>> dataImages; // Type -> Image -> Pixels
+	std::vector<std::vector<std::vector<double>>> testObjects; // Image -> (Type + Pixels)
 };
-
