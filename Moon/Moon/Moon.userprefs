@@ -1,12 +1,14 @@
 ﻿<Properties StartupItem="Moon.cproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="main.cpp">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Neuron.h">
     <Files>
       <File FileName="DataIn.h" Line="8" Column="19" />
-      <File FileName="DataIn.cpp" Line="3" Column="1" />
-      <File FileName="main.cpp" Line="27" Column="5" />
+      <File FileName="DataIn.cpp" Line="8" Column="25" />
+      <File FileName="main.cpp" Line="33" Column="1" />
       <File FileName="Runner.h" Line="1" Column="1" />
-      <File FileName="Runner.cpp" Line="15" Column="26" />
+      <File FileName="Runner.cpp" Line="1" Column="1" />
+      <File FileName="Config.h" Line="21" Column="14" />
+      <File FileName="Neuron.h" Line="27" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

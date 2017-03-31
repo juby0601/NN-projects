@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2857B73E-F847-4B02-9238-064979017E93}") = "ImageClassification", "ImageClassification\ImageClassification.cproj", "{B939DACB-65E9-4446-97E9-377A9A634630}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B939DACB-65E9-4446-97E9-377A9A634630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B939DACB-65E9-4446-97E9-377A9A634630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B939DACB-65E9-4446-97E9-377A9A634630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B939DACB-65E9-4446-97E9-377A9A634630}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

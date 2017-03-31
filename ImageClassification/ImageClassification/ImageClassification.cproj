@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B939DACB-65E9-4446-97E9-377A9A634630}</ProjectGuid>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+    <Language>CPP</Language>
+    <Target>Bin</Target>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug</OutputPath>
+    <OutputName>ImageClassification</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <DefineSymbols>DEBUG MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release</OutputPath>
+    <OutputName>ImageClassification</OutputName>
+    <CompileTarget>Bin</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <DefineSymbols>MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Runner.h" />
+    <None Include="Neuron.h" />
+    <None Include="Layer.h" />
+    <None Include="Config.h" />
+    <None Include="DataIn.h" />
+    <None Include="Output.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Runner.cpp" />
+    <Compile Include="Neuron.cpp" />
+    <Compile Include="Layer.cpp" />
+    <Compile Include="main.cpp" />
+    <Compile Include="DataIn.cpp" />
+    <Compile Include="Output.cpp" />
+  </ItemGroup>
+</Project>
