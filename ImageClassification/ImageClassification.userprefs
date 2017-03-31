@@ -1,1 +1,13 @@
-﻿<Properties StartupItem="ImageClassification/ImageClassification.cproj" />
+﻿<Properties StartupItem="ImageClassification/ImageClassification.cproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ImageClassification/Runner.cpp">
+    <Files>
+      <File FileName="ImageClassification/main.cpp" Line="25" Column="19" />
+      <File FileName="ImageClassification/Runner.cpp" Line="30" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -10,14 +10,14 @@ Runner::Runner() {
 
 	MLP.resize(NUMBER_OF_LAYERS);
 	DataIn dataIn;
+	data = dataIn.GetTrainingdata();
+	testData = dataIn.GetTestData();
 
-	Normalization();
-
-	vector<double> coordinates;
+	vector<double> initialImage;
 	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
-		coordinates.push_back(data[i][0]);
+		initialImage.push_back(data[0][0][i]);
 	}
-	MLP.at(0).InitInputlayer(NUMBER_OF_INPUTS, coordinates);
+	MLP.at(0).InitInputlayer(NUMBER_OF_INPUTS, initialImage);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		if (i == NUMBER_OF_LAYERS-1){
@@ -34,69 +34,86 @@ Runner::Runner() {
 	deltaWeights.resize(getNumberOfWeights());
 }
 
-void Runner::Normalization(){
-	for (int i = 0; i < data[0].size(); i++){
-		data[0][i] = (data[0][i] + XOFFSET)/XSCALE;
-		data[1][i] = (data[1][i] + YOFFSET)/YSCALE;
-	}
-}
-
 void Runner::Training(){
-	double predictedClass;
+	vector<double> predictedClasses;
+	vector<double> correctOutput(10);
+	double RMSerror = 0;
 	double error = 0;
 	for (unsigned int f = 0; f < EPOCHS; f++){ 
-		error = 0;
-		for (unsigned int i = 0; i < TOTAL_WINDOW_SIZE; i++){
-			predictedClass = PredictAValue(i);
-			error += 0.5*(data[2][i]-predictedClass)*(data[2][i]-predictedClass);
-			Backpropogation(LERANING_RATE,data[2][i]-predictedClass, predictedClass);
+		RMSerror = 0;
+		for (unsigned int i = 0; i < TOTAL_NUMBER_OF_CLASSES; i++){
+			correctOutput[i] = 1;
+			for (unsigned j = 0; j < TOTAL_NUMBER_OF_IMAGES; j++){
+				predictedClasses = PredictAValue(i,j);
+
+				for (unsigned int k =0; k < TOTAL_NUMBER_OF_CLASSES; k++){
+					RMSerror += 0.5*(correctOutput[k]-predictedClasses[k])*(correctOutput[k]-predictedClasses[k]);
+					error += (correctOutput[k]-predictedClasses[k]);
+				}
+				Backpropogation(LERANING_RATE,error, predictedClasses);	
+				error = 0;
+			}
+			correctOutput[i] = 0;
 		}
-		cout << "RMS: " <<error << endl;
+		cout << "RMS: " << RMSerror << endl;
 	}
 	cout << "Finished training" << endl;
 	cout << endl;
 }
 
-double Runner::PredictAValue(int k){
-	vector<double> coordinates(NUMBER_OF_INPUTS);
+vector<double> Runner::PredictAValue(int classType, int imageNr){
+	vector<double> output(10);
+	vector<double> imagePixels(NUMBER_OF_INPUTS);
 	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
-		coordinates[j] = data[j][k];
+		imagePixels[j] = data[classType][imageNr][j];
 	}
 
-	MLP.at(0).UpdateInputLayer(coordinates);
+	MLP.at(0).UpdateInputLayer(imagePixels);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
-	return (MLP.at(MLP.size() - 1).GetOutput().at(0));
+
+	for (int i = 0; i<OUTPUT_NEURONS; i++){
+		output[i] = (MLP.at(MLP.size() - 1).GetOutput().at(i));
+	}
+
+	return output;
 }
 
-vector<double> Runner::PredictValues(int start, int end) {
-	vector<double> coordinates(NUMBER_OF_INPUTS);
-	vector<double> predictedValues;
+vector<int> Runner::PredictValues() {
+	vector<double> testImage(NUMBER_OF_INPUTS);
+	vector<int> predictedValues;
 	double output;
 
-	for (unsigned int k = start; k<end; k++){
-
-		coordinates[0] = data[0][k];
-		coordinates[1] = data[1][k];
-								
-		MLP.at(0).UpdateInputLayer(coordinates);
+	for (unsigned int = 0; i < TOTAL_NUMBER_OF_IMAGES; i++){
+		for (unsigned int j = 1; j < NUMBER_OF_INPUTS+1; j++){
+			testImage[j-1] = testData[i][j];
+		}
+		MLP.at(0).UpdateInputLayer(testImage);
 		MLP.at(0).ComputeOutputs();
 
 		for (unsigned int i = 1; i<MLP.size(); i++){
 			MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
 		}
-		output = MLP.at(MLP.size() - 1).GetOutput().at(0);
-		if (output > 0.5){
-			predictedValues.push_back(1);
-		}else{
-			predictedValues.push_back(0);
-		}
+
+		predictedValues.push_back(FindIndexOfMax(MLP.at(MLP.size()-1).GetOutput()));
 	}
 	return predictedValues;
+}
+
+int Runner::FindIndexOfMax(vector<double> input){
+	int output;
+	double currentMax = -1;
+	for (int i = 0; i<(input.size()-1); i++){
+		if (input[i] > currentMax){
+			output = i;
+			currentMax = input[i];
+		}
+	}	
+	return output;
 }
 
 void Runner::Backpropogation(double learningRate, double error, double out){
@@ -133,7 +150,7 @@ void Runner::Backpropogation(double learningRate, double error, double out){
 	}
 }
 
-int Runner::getNumberOfWeights(){
+int Runner::GetNumberOfWeights(){
 	int numberOfWeights = 0;
 	for (int i = MLP.size()-1; i>=0; i--){
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
@@ -149,8 +166,8 @@ int Runner::getNumberOfWeights(){
 }
 
 
-double Runner::getDesiredOutput(int k){
-	return data[2][TOTAL_WINDOW_SIZE+k];
+double Runner::GetDesiredOutput(int k){
+	return testData[k][0];
 }
 
 

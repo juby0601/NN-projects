@@ -6,17 +6,18 @@ class Runner
 {
 private:
 	std::vector<Layer> MLP;
-	std::vector<std::vector<double> > data;
+	std::vector<std::vector<std::vector<double>> > data;
+	std::vector< vector<double> > testData;
 	std::vector<double> deltaWeights;
 	void Backpropogation(double learningRate, double error, double out);
-	int getNumberOfWeights();
-	void Normalization();
+	int GetNumberOfWeights();
+	int FindIndexOfMax(vector<double> input);
 public:
 	Runner();
-	double PredictAValue(int k);
-	std::vector<double> PredictValues(int start, int end);
+	vector<double> PredictAValue(int classType, int imageNr);
+	std::vector<int> PredictValues();
 	void Training();
-	double getDesiredOutput(int k);
+	double GetDesiredOutput(int k);
 	~Runner();
 };
 

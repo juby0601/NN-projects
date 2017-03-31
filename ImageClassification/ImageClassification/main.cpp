@@ -14,6 +14,15 @@ int main() {
 	srand (time(NULL));
 
 	Runner runner;
+	runner.Training();
+	vector<int> prediction = runner.PredictValues();
 
+	int numberOfMissClassification = 0;
+	for (int i = 0; i < prediction.size(); i++){
+		if (prediction[i] != runner.GetDesiredOutput(i)){
+			numberOfMissClassification++;
+		}
+	}
+	cout << numberOfMissClassification;
 	return 0;
 };
