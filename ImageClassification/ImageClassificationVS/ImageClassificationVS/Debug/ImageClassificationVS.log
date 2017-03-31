@@ -1,0 +1,16 @@
+﻿  Runner.cpp
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\runner.cpp(39): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\runner.cpp(81): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\runner.cpp(112): warning C4018: '<': signed/unsigned mismatch
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\runner.cpp(140): warning C4018: '<': signed/unsigned mismatch
+  Output.cpp
+  Neuron.cpp
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\neuron.cpp(75): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\main.cpp(14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\main.cpp(21): warning C4018: '<': signed/unsigned mismatch
+  Layer.cpp
+  DataIn.cpp
+  Generating Code...
+  ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.exe
+  ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.pdb (Partial PDB)
