@@ -10,8 +10,8 @@ Runner::Runner() {
 
 	MLP.resize(NUMBER_OF_LAYERS);
 	DataIn dataIn;
-	data = dataIn.GetTrainingdata();
-	testData = dataIn.GetTestData();
+	//data = dataIn.GetTrainingdata();
+	//testData = dataIn.GetTestData();
 
 	vector<double> initialImage;
 	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
@@ -31,7 +31,7 @@ Runner::Runner() {
 			MLP.at(i).ComputeOutputs();
 		}
 	}
-	deltaWeights.resize(getNumberOfWeights());
+	deltaWeights.resize(GetNumberOfWeights());
 }
 
 void Runner::Training(){
@@ -87,7 +87,7 @@ vector<int> Runner::PredictValues() {
 	vector<int> predictedValues;
 	double output;
 
-	for (unsigned int = 0; i < TOTAL_NUMBER_OF_IMAGES; i++){
+	for (unsigned int i= 0; i < TOTAL_NUMBER_OF_IMAGES; i++){
 		for (unsigned int j = 1; j < NUMBER_OF_INPUTS+1; j++){
 			testImage[j-1] = testData[i][j];
 		}
@@ -116,11 +116,11 @@ int Runner::FindIndexOfMax(vector<double> input){
 	return output;
 }
 
-void Runner::Backpropogation(double learningRate, double error, double out){
+void Runner::Backpropogation(double learningRate, double error, vector<double> out){
 	vector<double> weightTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
-	double output = out;
+	double output;
 	int deltaWeightCounter = 0;
 	// Loop through layers
 	for (int i = MLP.size()-1; i>=0; i--){
@@ -128,6 +128,7 @@ void Runner::Backpropogation(double learningRate, double error, double out){
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
 			if (i == (MLP.size()-1)){
+				output = out[j];
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
 					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];

@@ -8,14 +8,14 @@
 #include<stdlib.h>
 
 class DataIn{
-private:
-	std::vector<std::vector<double> > data;
-	std::string nameOfFile;
 public:
 	DataIn();
+	~DataIn();
 	/*int NumberOfDays(int year, int month, int day);
 	std::vector<std::vector<double> > GetData(){return data;};
 	void PercentageChanges();*/
-	~DataIn();
+
+private:
+
 };
 

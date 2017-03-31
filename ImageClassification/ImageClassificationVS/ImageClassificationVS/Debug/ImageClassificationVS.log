@@ -1,6 +1,4 @@
 ﻿  DataIn.cpp
-d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(38): warning C4018: '<': signed/unsigned mismatch
-d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(8): warning C4101: 'length': unreferenced local variable
-d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(9): warning C4101: 'buffer': unreferenced local variable
+d:\users\dariush\documents\github\nn-projects\imageclassification\imageclassification\datain.cpp(55): warning C4018: '<': signed/unsigned mismatch
   ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.exe
   ImageClassificationVS.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\Debug\ImageClassificationVS.pdb (Partial PDB)

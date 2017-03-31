@@ -1,10 +1,13 @@
 #pragma once
 #include <math.h>
 
+
 const unsigned int SAMPLE_SIZE = 50000;
 const unsigned int TOTAL_NUMBER_OF_CLASSES = 10;
 const unsigned int TOTAL_NUMBER_OF_IMAGES = 5000;
-
+const unsigned int PIXELS_PER_COLOR_PER_IMAGE = 1024;
+const unsigned int TOTAL_VALUES_PER_IMAGE = PIXELS_PER_COLOR_PER_IMAGE * 3 + 1;
+const unsigned int INPUT_DATA_FILES = 5;
 
 const unsigned int TOTAL_WINDOW_SIZE = 50000;
 const unsigned int NUMBER_OF_INPUTS = 1024;
