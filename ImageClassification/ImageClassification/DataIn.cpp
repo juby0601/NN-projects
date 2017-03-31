@@ -79,11 +79,10 @@ DataIn::DataIn() {
 	for (int i = 0; i < TOTAL_NUMBER_OF_CLASSES; i++) {
 		for (int j = 0; j < dataImages.at(i).size(); j++) {
 			for (int k = 0; k < PIXELS_PER_COLOR_PER_IMAGE; k++) {
-				dataImages.at(i).at(j).at(k) /= 765;
+				dataImages.at(i).at(j).at(k) *= 0.00130718954248366004;
 			}
 		}
 	}
 }
-
 
 DataIn::~DataIn(){}
