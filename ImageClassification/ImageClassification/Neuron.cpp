@@ -55,7 +55,9 @@ double Neuron::ActivationFunction(double input){
 void Neuron::GenerateInitialWeights() {
 	for (unsigned int i = 0; i < weights.size(); i++) {
 		double r = ((double) rand() / (RAND_MAX))*2-1;
+		cout << r << endl;
 		weights.at(i) = WEIGHT_SCALE * r;
+		cout << WEIGHT_SCALE << endl;
 	}
 }
 

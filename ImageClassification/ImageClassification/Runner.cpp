@@ -10,9 +10,8 @@ Runner::Runner() {
 
 	MLP.resize(NUMBER_OF_LAYERS);
 	DataIn dataIn;
-	//data = dataIn.GetTrainingdata();
-	//testData = dataIn.GetTestData();
-
+	data = dataIn.GetTrainingData();
+	testData = dataIn.GetTestData();
 	vector<double> initialImage;
 	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
 		initialImage.push_back(data[0][0][i]);
@@ -21,7 +20,7 @@ Runner::Runner() {
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		if (i == NUMBER_OF_LAYERS-1){
-			MLP.at(i).Init(1,MLP.at(i-1).GetOutput());
+			MLP.at(i).Init(OUTPUT_NEURONS,MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
 		}else if (i == NUMBER_OF_LAYERS-2){
 			MLP.at(i).Init(SECOND_HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
@@ -36,7 +35,7 @@ Runner::Runner() {
 
 void Runner::Training(){
 	vector<double> predictedClasses;
-	vector<double> correctOutput(10);
+	vector<double> correctOutput(10,0);
 	double RMSerror = 0;
 	double error = 0;
 	for (unsigned int f = 0; f < EPOCHS; f++){ 
@@ -45,7 +44,6 @@ void Runner::Training(){
 			correctOutput[i] = 1;
 			for (unsigned j = 0; j < TOTAL_NUMBER_OF_IMAGES; j++){
 				predictedClasses = PredictAValue(i,j);
-
 				for (unsigned int k =0; k < TOTAL_NUMBER_OF_CLASSES; k++){
 					RMSerror += 0.5*(correctOutput[k]-predictedClasses[k])*(correctOutput[k]-predictedClasses[k]);
 					error += (correctOutput[k]-predictedClasses[k]);
@@ -62,19 +60,17 @@ void Runner::Training(){
 }
 
 vector<double> Runner::PredictAValue(int classType, int imageNr){
-	vector<double> output(10);
+	vector<double> output(OUTPUT_NEURONS);
 	vector<double> imagePixels(NUMBER_OF_INPUTS);
 	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
 		imagePixels[j] = data[classType][imageNr][j];
 	}
-
 	MLP.at(0).UpdateInputLayer(imagePixels);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
-
 	for (int i = 0; i<OUTPUT_NEURONS; i++){
 		output[i] = (MLP.at(MLP.size() - 1).GetOutput().at(i));
 	}

@@ -1,1 +1,21 @@
-﻿<Properties StartupItem="ImageClassification.cproj" />
+﻿<Properties StartupItem="ImageClassification.cproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Runner.cpp">
+    <Files>
+      <File FileName="DataIn.h" Line="14" Column="47" />
+      <File FileName="DataIn.cpp" Line="45" Column="62" />
+      <File FileName="Config.h" Line="20" Column="48" />
+      <File FileName="Runner.cpp" Line="45" Column="34" />
+      <File FileName="Runner.h" Line="10" Column="44" />
+      <File FileName="Neuron.cpp" Line="58" Column="21" />
+      <File FileName="Neuron.h" Line="1" Column="1" />
+      <File FileName="main.cpp" Line="15" Column="2" />
+      <File FileName="../../../../../../../../../../usr/include/c++/5/bits/stl_vector.h" Line="808" Column="7" />
+      <File FileName="Layer.cpp" Line="26" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

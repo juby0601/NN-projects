@@ -10,15 +10,15 @@
 class DataIn{
 public:
 	DataIn();
+	std::vector<std::vector<std::vector<double> > > GetTrainingData(){return dataImages;};
+	std::vector<std::vector<double> > GetTestData(){return testObjects;}
 	~DataIn();
-	/*int NumberOfDays(int year, int month, int day);
-	std::vector<std::vector<double> > GetData(){return data;};
-	void PercentageChanges();*/
 
 private:
-	void ReadData(std::string fileName);
-	void LimitInput();
-
-	std::vector<std::vector<std::vector<double>>> dataImages; // Type -> Image -> Pixels
-	std::vector<std::vector<std::vector<double>>> testObjects; // Image -> (Type + Pixels)
+	// Type -> Image -> Pixels
+	std::vector<std::vector<std::vector<double> > > dataImages;
+	// Image -> (Type + Pixels)
+	std::vector<std::vector<double> > testObjects;
+	void convertData(std::vector<char> input);
+	std::vector<char> ReadData(std::string filename);
 };

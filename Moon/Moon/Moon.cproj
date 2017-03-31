@@ -34,7 +34,6 @@
     <Compile Include="main.cpp" />
     <Compile Include="Layer.cpp" />
     <Compile Include="DataIn.cpp" />
-    <Compile Include="Output.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config.h" />
@@ -42,7 +41,6 @@
     <None Include="Neuron.h" />
     <None Include="Layer.h" />
     <None Include="DataIn.h" />
-    <None Include="Output.h" />
     <None Include="bin\Debug\two_moon.txt" />
   </ItemGroup>
 </Project>

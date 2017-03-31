@@ -1,8 +1,6 @@
 ﻿#include "Runner.h"
 #include "Config.h"
 #include "DataIn.h"
-#include "Input.h"
-#include "Output.h"
 #include <cstddef>
 #include "Layer.h"
 #include <stdio.h>
