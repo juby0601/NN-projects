@@ -1,0 +1,15 @@
+﻿  DataIn.cpp
+..\..\ImageClassification\DataIn.cpp(44): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Layer.cpp
+..\..\ImageClassification\Layer.cpp(66): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+..\..\ImageClassification\main.cpp(15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Neuron.cpp
+  Output.cpp
+  Runner.cpp
+..\..\ImageClassification\Runner.cpp(85): warning C4101: 'output': unreferenced local variable
+..\..\ImageClassification\Runner.cpp(123): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+..\..\ImageClassification\Runner.cpp(125): warning C4018: '<': signed/unsigned mismatch
+..\..\ImageClassification\Runner.cpp(154): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+..\..\ImageClassification\Runner.cpp(155): warning C4018: '<': signed/unsigned mismatch
+LINK : fatal error LNK1104: cannot open file 'D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassification\ImageClassificationVS\x64\Release\ImageClassificationVS.exe'

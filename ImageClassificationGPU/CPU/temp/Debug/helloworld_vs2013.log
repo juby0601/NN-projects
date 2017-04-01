@@ -1,0 +1,6 @@
+﻿  helloworld.cpp
+d:\program files\arrayfire\v3\include\af\exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  d:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af\exception.h(19): note: see declaration of 'af::exception'
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\CPU\helloworld_debug.exe
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\CPU\helloworld_debug.pdb (Full PDB)

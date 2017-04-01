@@ -1,0 +1,12 @@
+﻿  helloworld.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+  Generating code
+  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\Unified\helloworld.exe
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\Unified\helloworld.pdb (Full PDB)
+  copy "\nvvm\bin\nvvm64*.dll" "D:\Program Files\ArrayFire\v3\examples\helloworld\Unified\"
+  The system cannot find the path specified.
+  "CUDA NVVM DLLs copy failed due to missing files."

@@ -1,0 +1,15 @@
+﻿  DataIn.cpp
+..\..\ImageClassification\DataIn.cpp(61): warning C4244: 'argument': conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+  Layer.cpp
+  main.cpp
+..\..\ImageClassification\main.cpp(15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+..\..\ImageClassification\main.cpp(22): warning C4018: '<': signed/unsigned mismatch
+  Neuron.cpp
+..\..\ImageClassification\Neuron.cpp(75): warning C4018: '<': signed/unsigned mismatch
+  Output.cpp
+  Runner.cpp
+..\..\ImageClassification\Runner.cpp(87): warning C4101: 'output': unreferenced local variable
+..\..\ImageClassification\Runner.cpp(109): warning C4018: '<': signed/unsigned mismatch
+..\..\ImageClassification\Runner.cpp(127): warning C4018: '<': signed/unsigned mismatch
+..\..\ImageClassification\Runner.cpp(157): warning C4018: '<': signed/unsigned mismatch
+LINK : fatal error LNK1181: cannot open input file 'OpenCL.lib'

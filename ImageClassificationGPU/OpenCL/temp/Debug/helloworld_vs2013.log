@@ -1,0 +1,49 @@
+﻿  helloworld.cpp
+d:\program files\arrayfire\v3\include\af\exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  d:\program files (x86)\microsoft visual studio 14.0\vc\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af\exception.h(19): note: see declaration of 'af::exception'
+  
+  Searching libraries
+      Searching D:\Program Files\ArrayFire\v3\lib\afopencl.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\msvcprtd.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\uuid.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\MSVCRTD.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\OLDNAMES.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\kernel32.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\vcruntimed.lib:
+      Searching C:\Program Files (x86)\Windows Kits\10\lib\10.0.10240.0\ucrt\x64\ucrtd.lib:
+      Searching D:\Program Files\ArrayFire\v3\lib\afopencl.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\msvcprtd.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\uuid.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\MSVCRTD.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\OLDNAMES.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\kernel32.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\vcruntimed.lib:
+  
+  Finished searching libraries
+  
+  Searching libraries
+      Searching D:\Program Files\ArrayFire\v3\lib\afopencl.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\msvcprtd.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\uuid.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\MSVCRTD.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\OLDNAMES.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\kernel32.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\vcruntimed.lib:
+      Searching C:\Program Files (x86)\Windows Kits\10\lib\10.0.10240.0\ucrt\x64\ucrtd.lib:
+  
+  Finished searching libraries
+  
+  Searching libraries
+      Searching D:\Program Files\ArrayFire\v3\lib\afopencl.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\msvcprtd.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\uuid.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\MSVCRTD.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\OLDNAMES.lib:
+      Searching C:\Program Files (x86)\Windows Kits\8.1\lib\winv6.3\um\x64\kernel32.lib:
+      Searching D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64\vcruntimed.lib:
+      Searching C:\Program Files (x86)\Windows Kits\10\lib\10.0.10240.0\ucrt\x64\ucrtd.lib:
+  
+  Finished searching libraries
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\OpenCL\helloworld_debug.exe
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\OpenCL\helloworld_debug.pdb (Full PDB)

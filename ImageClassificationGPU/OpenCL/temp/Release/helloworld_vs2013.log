@@ -1,0 +1,8 @@
+﻿  helloworld.cpp
+  Generating code
+  940 of 940 functions (100.0%) were compiled, the rest were copied from previous compilation.
+    939 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  helloworld_vs2013.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassificationGPU\OpenCL\helloworld.exe
+  helloworld_vs2013.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassificationGPU\OpenCL\helloworld.pdb (Full PDB)

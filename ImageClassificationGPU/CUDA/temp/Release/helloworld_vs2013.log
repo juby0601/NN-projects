@@ -1,0 +1,14 @@
+﻿  helloworld.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+  Generating code
+  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\CUDA\helloworld.exe
+  helloworld_vs2013.vcxproj -> D:\Program Files\ArrayFire\v3\examples\helloworld\CUDA\helloworld.pdb (Full PDB)
+  copy "\nvvm\bin\nvvm64*.dll" "D:\Program Files\ArrayFire\v3\examples\helloworld\CUDA\"
+  The system cannot find the path specified.
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(133,5): error MSB3073: The command "echo copy "\nvvm\bin\nvvm64*.dll" "D:\Program Files\ArrayFire\v3\examples\helloworld\CUDA\"
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(133,5): error MSB3073: copy "\nvvm\bin\nvvm64*.dll" "D:\Program Files\ArrayFire\v3\examples\helloworld\CUDA\"
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(133,5): error MSB3073: :VCEnd" exited with code 1.
