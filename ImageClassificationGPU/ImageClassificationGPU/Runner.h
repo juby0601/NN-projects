@@ -1,21 +1,22 @@
 ﻿#pragma once
-#include<vector>
 #include "Layer.h"
+#include <arrayfire.h>
+#include <vector>
 
 class Runner
 {
 private:
 	std::vector<Layer> MLP;
-	std::vector<std::vector<std::vector<double> > > data;
-	std::vector<std::vector<double> > testData;
-	std::vector<double> deltaWeights;
-	void Backpropogation(double learningRate, std::vector<double> error, std::vector<double> out);
+	af::array data;
+	af::array testData;
+	af::array deltaWeights;
+	void Backpropogation(double learningRate, af::array &error, af::array &out);
 	int GetNumberOfWeights();
-	int FindIndexOfMax(std::vector<double> input);
+	int FindIndexOfMax(af::array &input);
 public:
 	Runner();
-	std::vector<double> PredictAValue(int classType, int imageNr);
-	std::vector<int> PredictValues();
+	af::array PredictAValue(int classType, int imageNr);
+	af::array PredictValues();
 	void Training();
 	double GetDesiredOutput(int k);
 	~Runner();

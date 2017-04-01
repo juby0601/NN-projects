@@ -5,6 +5,7 @@
 #include <cstddef>
 
 using namespace std;
+using namespace af;
 
 Runner::Runner() {
 
@@ -12,59 +13,52 @@ Runner::Runner() {
 	DataIn dataIn;
 	data = dataIn.GetTrainingData();
 	testData = dataIn.GetTestData();
-	vector<double> initialImage;
+	af::array initialImage = af::array(PIXELS_PER_COLOR_PER_IMAGE, f64);
 	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
-		initialImage.push_back(data[0][0][i]);
+		initialImage(i) = data(0,0,i);
 	}
 	MLP.at(0).InitInputlayer(NUMBER_OF_INPUTS, initialImage);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
-		if (i == NUMBER_OF_LAYERS-1){
-			MLP.at(i).Init(OUTPUT_NEURONS,MLP.at(i-1).GetOutput());
-			MLP.at(i).ComputeOutputs();
-		}else if (i == NUMBER_OF_LAYERS-2){
-			MLP.at(i).Init(SECOND_HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
-			MLP.at(i).ComputeOutputs();
-		}else{
-			MLP.at(i).Init(FIRST_HIDDEN_LAYER_NEURONS,MLP.at(i-1).GetOutput());
-			MLP.at(i).ComputeOutputs();
-		}
+		MLP.at(i).Init(LAYER_NEURONS[i], MLP.at(i - 1).GetOutput());
+		MLP.at(i).ComputeOutputs();
 	}
-	deltaWeights.resize(GetNumberOfWeights());
+	deltaWeights = af::constant(0, GetNumberOfWeights(), f64);
 }
 
 void Runner::Training(){
-	vector<double> predictedClasses;
-	vector<double> correctOutput(10,0);
-	double RMSerror = 0;
-	vector<double> error(OUTPUT_NEURONS);
-	for (unsigned int f = 0; f < EPOCHS; f++){ 
-		for (unsigned int i = 0; i < TOTAL_NUMBER_OF_CLASSES; i++){
-			correctOutput[i] = 1;
-			for (unsigned j = 0; j < TOTAL_NUMBER_OF_IMAGES; j++){
-				predictedClasses = PredictAValue(i,j);
-				for (unsigned int k =0; k < TOTAL_NUMBER_OF_CLASSES; k++){
-					RMSerror += 0.5*(correctOutput[k]-predictedClasses[k])*(correctOutput[k]-predictedClasses[k]);
-					error[k] = (correctOutput[k]-predictedClasses[k]);
-				}
+	af::array predictedClasses;
+	af::array correctOutput = af::constant(0, TOTAL_NUMBER_OF_CLASSES, f64);
+	af::array RMSerror;
+	af::array error;
+	for (unsigned int f = 0; f < EPOCHS; f++){
+		
+		for (unsigned int i = 0; i < TOTAL_NUMBER_OF_IMAGES; i++){
+			for (unsigned j = 0; j < TOTAL_NUMBER_OF_CLASSES; j++){
+				correctOutput(j) = 1;
+				predictedClasses = PredictAValue(j,i);
+
+				error = correctOutput - predictedClasses;
+				RMSerror = 0.5*error*error;
+				RMSerror = af::sum(RMSerror);
+
 				Backpropogation(LERANING_RATE,error, predictedClasses);	
-				if (j % 5000 == 0){
-					cout << "RMS: " << RMSerror << endl;
-					RMSerror = 0;
-				}
+				correctOutput(j) = 0;
 			}
-			correctOutput[i] = 0;
+			if (i % 5000 == 0) {
+				cout << "RMS: " << RMSerror.scalar<float>() << endl;
+				RMSerror = 0;
+			}
 		}
 	}
 	cout << "Finished training" << endl;
 	cout << endl;
 }
 
-vector<double> Runner::PredictAValue(int classType, int imageNr){
-	vector<double> output(OUTPUT_NEURONS);
-	vector<double> imagePixels(NUMBER_OF_INPUTS);
+af::array Runner::PredictAValue(int classType, int imageNr){
+	af::array imagePixels = af::array(NUMBER_OF_INPUTS);
 	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
-		imagePixels[j] = data[classType][imageNr][j];
+		imagePixels(j) = data(classType,imageNr,j);
 	}
 	MLP.at(0).UpdateInputLayer(imagePixels);
 	MLP.at(0).ComputeOutputs();
@@ -72,21 +66,19 @@ vector<double> Runner::PredictAValue(int classType, int imageNr){
 		MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
-	for (int i = 0; i<OUTPUT_NEURONS; i++){
-		output[i] = (MLP.at(MLP.size() - 1).GetOutput().at(i));
-	}
 
-	return output;
+	return MLP.at(MLP.size() - 1).GetOutput();
 }
 
-vector<int> Runner::PredictValues() {
-	vector<double> testImage(NUMBER_OF_INPUTS);
-	vector<int> predictedValues;
-	double output;
+af::array Runner::PredictValues() {
+	af::array testImage(NUMBER_OF_INPUTS);
+	af::array predictedValues = af::array(TOTAL_NUMBER_OF_IMAGES, s32);
+	af::array index;
+	af::array value;
 
 	for (unsigned int i= 0; i < TOTAL_NUMBER_OF_IMAGES; i++){
 		for (unsigned int j = 1; j < NUMBER_OF_INPUTS+1; j++){
-			testImage[j-1] = testData[i][j];
+			testImage(j-1) = testData(i,j);
 		}
 		MLP.at(0).UpdateInputLayer(testImage);
 		MLP.at(0).ComputeOutputs();
@@ -95,25 +87,18 @@ vector<int> Runner::PredictValues() {
 			MLP.at(i).UpdateLayer(MLP.at(i-1).GetOutput());
 			MLP.at(i).ComputeOutputs();
 		}
-
-		predictedValues.push_back(FindIndexOfMax(MLP.at(MLP.size()-1).GetOutput()));
+		af::max(value, index, MLP.at(MLP.size() - 1).GetOutput(), 0);
+		predictedValues(i) = index.scalar<int>();
 	}
 	return predictedValues;
 }
 
-int Runner::FindIndexOfMax(vector<double> input){
-	int output;
-	double currentMax = -1;
-	for (int i = 0; i<(input.size()-1); i++){
-		if (input[i] > currentMax){
-			output = i;
-			currentMax = input[i];
-		}
-	}	
-	return output;
-}
+void Runner::Backpropogation(double learningRate, af::array &error, af::array &out){
+	for (int i = MLP.size() - 1; i >= 0; i--) {
 
-void Runner::Backpropogation(double learningRate, vector<double> error, vector<double> out){
+	}
+	
+	/*
 	vector<double> weightTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
@@ -122,8 +107,13 @@ void Runner::Backpropogation(double learningRate, vector<double> error, vector<d
 	// Loop through layers
 	for (int i = MLP.size()-1; i>=0; i--){
 		// Loop through neurons in each layer
+
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
+
+			output*(1 - output)*learningRate*error(j)*MLP[i].GetInput()+ALPHA*;
+
+
 
 			if (i == (MLP.size()-1)){
 				output = out[j];
@@ -147,17 +137,18 @@ void Runner::Backpropogation(double learningRate, vector<double> error, vector<d
 		errorSum = errorSumTemp;
 		errorSumTemp = 0;
 	}
+	*/
 }
 
 int Runner::GetNumberOfWeights(){
 	int numberOfWeights = 0;
 	for (int i = MLP.size()-1; i>=0; i--){
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
-			for (unsigned int k = 0; k<MLP[i].GetNeuron(j).getWeights().size(); k++){
-				cout << MLP[i].GetNeuron(j).getWeights()[k] << " ";
+			for (unsigned int k = 0; k<MLP[i].GetWeights().dims(0); k++){
+				//cout << MLP[i].GetWeights()(k,j) << " ";
 				numberOfWeights++;
 			}
-			cout << endl;
+			//cout << endl;
 		}
 	}
 	cout << numberOfWeights << endl;

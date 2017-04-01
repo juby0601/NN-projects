@@ -1,8 +1,32 @@
-﻿  helloworld.cpp
-  Generating code
-  940 of 940 functions (100.0%) were compiled, the rest were copied from previous compilation.
-    939 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  helloworld_vs2013.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassificationGPU\OpenCL\helloworld.exe
-  helloworld_vs2013.vcxproj -> D:\Users\Dariush\Documents\GitHub\NN-projects\ImageClassificationGPU\OpenCL\helloworld.pdb (Full PDB)
+﻿  DataIn.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+  Layer.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+  main.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+ImageClassificationGPU\main.cpp(15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+ImageClassificationGPU\main.cpp(19): error C2440: 'initializing': cannot convert from 'af::array' to 'std::vector<int,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=int
+          ]
+  ImageClassificationGPU\main.cpp(19): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+  Neuron.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+ImageClassificationGPU\Neuron.cpp(58): error C2676: binary '[': 'af::array' does not define this operator or a conversion to a type acceptable to the predefined operator
+  Runner.cpp
+d:\program files\arrayfire\v3\include\af/exception.h(20): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'af::exception'
+  D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\vcruntime_exception.h(43): note: see declaration of 'std::exception'
+  d:\program files\arrayfire\v3\include\af/exception.h(19): note: see declaration of 'af::exception'
+ImageClassificationGPU\Runner.cpp(97): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+ImageClassificationGPU\Runner.cpp(145): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+ImageClassificationGPU\Runner.cpp(146): warning C4018: '<': signed/unsigned mismatch
+ImageClassificationGPU\Runner.cpp(160): error C2676: binary '[': 'af::array' does not define this operator or a conversion to a type acceptable to the predefined operator

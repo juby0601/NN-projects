@@ -4,11 +4,15 @@
 #include <iterator>
 #include <algorithm>
 #include <sstream>
+#include <cstdio>
+#include <cstdlib>
 using namespace std;
+using namespace af;
 
 DataIn::DataIn() {
-	dataImages.resize(TOTAL_NUMBER_OF_CLASSES);
-	testObjects.resize(TOTAL_NUMBER_OF_TEST_IMAGES);
+	dataImages = af::array(TOTAL_NUMBER_OF_CLASSES, TOTAL_NUMBER_OF_IMAGES, PIXELS_PER_COLOR_PER_IMAGE, f64);
+	testObjects = af::array(TOTAL_NUMBER_OF_TEST_IMAGES, PIXELS_PER_COLOR_PER_IMAGE, f64);
+
 	stringstream ss;
 	for (int i = 1; i < 6; i++) {
 		ss.str("");
@@ -18,15 +22,14 @@ DataIn::DataIn() {
 
 	vector<unsigned char> bufferTest = ReadData("test_batch.bin");
 	//Creating test objects
-	int testObjectCounter = 0;
 	double red,blue,green;
 	for (int i = 0; i<TOTAL_NUMBER_OF_TEST_IMAGES; i++){
-		testObjects.at(i).push_back((double)bufferTest[i*TOTAL_VALUES_PER_IMAGE]);
+		testObjects(i, 0) = (double)bufferTest[i*TOTAL_VALUES_PER_IMAGE];
 		for (int j = 1; j<PIXELS_PER_COLOR_PER_IMAGE+1; j++){
 			red = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j];
 			blue = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j+PIXELS_PER_COLOR_PER_IMAGE];
 			green = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j+2*PIXELS_PER_COLOR_PER_IMAGE];
-			testObjects.at(i).push_back((red+blue+green)/(3*255));
+			testObjects(i, j) = (red + blue + green) / (3 * 255);
 		}
 	}
 }
@@ -35,14 +38,15 @@ void DataIn::convertData(vector<unsigned char> input){
 	int objectCounter = 0;
 	double red,blue,green;
 	vector<double> images;
+	vector<int> imageCounter(10,0);
 	for (int i = 0; i<TOTAL_NUMBER_OF_TEST_IMAGES; i++){
-		dataImages.at((int)input[i*TOTAL_VALUES_PER_IMAGE]).push_back(images);
 		for (int j = 1; j<PIXELS_PER_COLOR_PER_IMAGE+1; j++){
-			red = (double)input[TOTAL_VALUES_PER_IMAGE*i+j];
-			blue = (double)input[TOTAL_VALUES_PER_IMAGE*i+j+PIXELS_PER_COLOR_PER_IMAGE];
-			green = (double)input[TOTAL_VALUES_PER_IMAGE*i+j+2*PIXELS_PER_COLOR_PER_IMAGE];
-			int lastElement = dataImages.at((int)input[i*TOTAL_VALUES_PER_IMAGE]).size()-1;
-			dataImages.at((int)input[i*TOTAL_VALUES_PER_IMAGE]).at(lastElement).push_back((red+blue+green)/(3*255));
+			unsigned int k = TOTAL_VALUES_PER_IMAGE * i;
+			red = (double)input[k+j];
+			blue = (double)input[k+j+PIXELS_PER_COLOR_PER_IMAGE];
+			green = (double)input[k+j+2*PIXELS_PER_COLOR_PER_IMAGE];
+			dataImages((int)input[k], imageCounter[(int)input[k]],j-1) = (red + blue + green) / (3 * 255);
+			imageCounter[(int)input[k]]++;
 		}
 	}
 }
@@ -63,7 +67,5 @@ vector<unsigned char> DataIn::ReadData(string filename) {
 
 	return bufferData;
 }
-
-
 
 DataIn::~DataIn(){}

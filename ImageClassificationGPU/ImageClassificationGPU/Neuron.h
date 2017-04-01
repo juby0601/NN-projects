@@ -1,26 +1,27 @@
 #pragma once
 #include <vector>
-#include <stdlib.h> 
+#include <stdlib.h>
+#include <arrayfire.h>
+
 
 class Neuron
 {
 public:
 	Neuron();
 	~Neuron();
-	void Init(std::vector<double> &inputVector);
-	void Init(double input);
-	double ComputeOutput();
-	std::vector<double> getWeights();
+	void Init(af::array &inputVector);
+	void Neuron::Init(af::array input);
+	af::array ComputeOutput();
+	af::array getWeights();
 	void setWeights(std::vector<double> &inputWeights);
-	void UpdateNeuron(std::vector<double> inputVector);
+	void UpdateNeuron(af::array inputVector);
 	void UpdateNeuron(double input);
 private:
-	void GenerateInitialWeights();
+	af::array Summation(af::array input);
 
-	std::vector<double> inputs;
-	std::vector<double> weights;
-	std::vector<double> product;
-	double Sum(std::vector<double> &vector);
+	af::array inputs;
+	af::array weights;
+	af::array product;
 	double ActivationFunction(double input);
 	double weightProduct;
 };
