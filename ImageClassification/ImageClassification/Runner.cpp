@@ -46,9 +46,7 @@ void Runner::Training(){
 				for (unsigned int k =0; k < TOTAL_NUMBER_OF_CLASSES; k++){
 					RMSerror += 0.5*(correctOutput[k]-predictedClasses[k])*(correctOutput[k]-predictedClasses[k]);
 					error[k] = (correctOutput[k]-predictedClasses[k]);
-					cout << (correctOutput[k]-predictedClasses[k]) << endl;
 				}
-				cout << endl;
 				Backpropogation(LERANING_RATE,error, predictedClasses);	
 				if (j % 5000 == 0){
 					cout << "RMS: " << RMSerror << endl;
