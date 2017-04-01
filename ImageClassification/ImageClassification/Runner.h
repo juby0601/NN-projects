@@ -9,7 +9,7 @@ private:
 	std::vector<std::vector<std::vector<double> > > data;
 	std::vector<std::vector<double> > testData;
 	std::vector<double> deltaWeights;
-	void Backpropogation(double learningRate, double error, std::vector<double> out);
+	void Backpropogation(double learningRate, std::vector<double> error, std::vector<double> out);
 	int GetNumberOfWeights();
 	int FindIndexOfMax(std::vector<double> input);
 public:

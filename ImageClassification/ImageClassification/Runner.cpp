@@ -37,23 +37,26 @@ void Runner::Training(){
 	vector<double> predictedClasses;
 	vector<double> correctOutput(10,0);
 	double RMSerror = 0;
-	double error = 0;
+	vector<double> error(OUTPUT_NEURONS);
 	for (unsigned int f = 0; f < EPOCHS; f++){ 
-		RMSerror = 0;
 		for (unsigned int i = 0; i < TOTAL_NUMBER_OF_CLASSES; i++){
 			correctOutput[i] = 1;
 			for (unsigned j = 0; j < TOTAL_NUMBER_OF_IMAGES; j++){
 				predictedClasses = PredictAValue(i,j);
 				for (unsigned int k =0; k < TOTAL_NUMBER_OF_CLASSES; k++){
 					RMSerror += 0.5*(correctOutput[k]-predictedClasses[k])*(correctOutput[k]-predictedClasses[k]);
-					error += (correctOutput[k]-predictedClasses[k]);
+					error[k] = (correctOutput[k]-predictedClasses[k]);
+					cout << (correctOutput[k]-predictedClasses[k]) << endl;
 				}
+				cout << endl;
 				Backpropogation(LERANING_RATE,error, predictedClasses);	
-				error = 0;
+				if (j % 5000 == 0){
+					cout << "RMS: " << RMSerror << endl;
+					RMSerror = 0;
+				}
 			}
 			correctOutput[i] = 0;
 		}
-		cout << "RMS: " << RMSerror << endl;
 	}
 	cout << "Finished training" << endl;
 	cout << endl;
@@ -112,7 +115,7 @@ int Runner::FindIndexOfMax(vector<double> input){
 	return output;
 }
 
-void Runner::Backpropogation(double learningRate, double error, vector<double> out){
+void Runner::Backpropogation(double learningRate, vector<double> error, vector<double> out){
 	vector<double> weightTemp;
 	double errorSum = 0;
 	double errorSumTemp = 0;
@@ -123,12 +126,13 @@ void Runner::Backpropogation(double learningRate, double error, vector<double> o
 		// Loop through neurons in each layer
 		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
 			weightTemp = MLP[i].GetNeuron(j).getWeights();
+
 			if (i == (MLP.size()-1)){
 				output = out[j];
 				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*MLP[i].GetInput()[k]*error+ALPHA*deltaWeights[deltaWeightCounter];
+					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*MLP[i].GetInput()[k]*error[j]+ALPHA*deltaWeights[deltaWeightCounter];
 					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*error*output*(1-output);
+					errorSumTemp += weightTemp[k]*error[j]*output*(1-output);
 					deltaWeightCounter++;
 				}
 			}else{

@@ -19,6 +19,6 @@ private:
 	std::vector<std::vector<std::vector<double> > > dataImages;
 	// Image -> (Type + Pixels)
 	std::vector<std::vector<double> > testObjects;
-	void convertData(std::vector<char> input);
-	std::vector<char> ReadData(std::string filename);
+	void convertData(std::vector<unsigned char> input);
+	std::vector<unsigned char> ReadData(std::string filename);
 };

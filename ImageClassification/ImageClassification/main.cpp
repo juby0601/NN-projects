@@ -11,6 +11,7 @@
 using namespace std;
 
 int main() {
+
 	srand (time(NULL));
 
 	Runner runner;
@@ -24,5 +25,6 @@ int main() {
 		}
 	}
 	cout << numberOfMissClassification;
+
 	return 0;
 };

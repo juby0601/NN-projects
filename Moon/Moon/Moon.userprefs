@@ -7,8 +7,9 @@
       <File FileName="main.cpp" Line="1" Column="1" />
       <File FileName="Runner.h" Line="1" Column="1" />
       <File FileName="Runner.cpp" Line="1" Column="1" />
-      <File FileName="Config.h" Line="11" Column="48" />
+      <File FileName="Config.h" Line="16" Column="25" />
       <File FileName="Neuron.h" Line="1" Column="1" />
+      <File FileName="Neuron.cpp" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
