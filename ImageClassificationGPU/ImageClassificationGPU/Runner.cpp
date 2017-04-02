@@ -42,7 +42,7 @@ void Runner::Training(){
 
 				error = correctOutput - predictedClasses;
 				RMSerror = 0.5*error*error;
-				RMSerror = af::sum(RMSerror);
+				RMSerror += af::sum(RMSerror);
 
 				Backpropogation(LERANING_RATE,error, predictedClasses);	
 				correctOutput(j) = 0;
@@ -121,8 +121,7 @@ void Runner::Backpropogation(double learningRate, af::array &error, af::array &o
 		}
 		errorSum(0) = errorSumTemp.scalar();
 		errorSumTemp(0) = 0;
-	}
-	
+	}	
 }
 
 int Runner::GetNumberOfWeights(){
