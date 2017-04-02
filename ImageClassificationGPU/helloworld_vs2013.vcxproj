@@ -41,7 +41,6 @@
     <ClCompile Include="ImageClassificationGPU\DataIn.cpp" />
     <ClCompile Include="ImageClassificationGPU\Layer.cpp" />
     <ClCompile Include="ImageClassificationGPU\main.cpp" />
-    <ClCompile Include="ImageClassificationGPU\Neuron.cpp" />
     <ClCompile Include="ImageClassificationGPU\Output.cpp" />
     <ClCompile Include="ImageClassificationGPU\Runner.cpp" />
   </ItemGroup>
@@ -49,7 +48,6 @@
     <ClInclude Include="ImageClassificationGPU\Config.h" />
     <ClInclude Include="ImageClassificationGPU\DataIn.h" />
     <ClInclude Include="ImageClassificationGPU\Layer.h" />
-    <ClInclude Include="ImageClassificationGPU\Neuron.h" />
     <ClInclude Include="ImageClassificationGPU\Output.h" />
     <ClInclude Include="ImageClassificationGPU\Runner.h" />
   </ItemGroup>

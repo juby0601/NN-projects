@@ -10,15 +10,13 @@ private:
 	af::array data;
 	af::array testData;
 	af::array deltaWeights;
-	void Backpropogation(double learningRate, af::array &error, af::array &out);
-	int GetNumberOfWeights();
-	int FindIndexOfMax(af::array &input);
+	void Backpropogation(af::array &error, af::array &out);
 public:
 	Runner();
+	void Training();
 	af::array PredictAValue(int classType, int imageNr);
 	af::array PredictValues();
-	void Training();
-	double GetDesiredOutput(int k);
+	af::array GetDesiredOutput(int k);
 	~Runner();
 };
 

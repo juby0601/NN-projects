@@ -10,6 +10,7 @@ using namespace std;
 using namespace af;
 
 DataIn::DataIn() {
+	imageCounter.resize(TOTAL_NUMBER_OF_CLASSES);
 	dataImages = af::array(TOTAL_NUMBER_OF_CLASSES, TOTAL_NUMBER_OF_IMAGES, PIXELS_PER_COLOR_PER_IMAGE, f64);
 	testObjects = af::array(TOTAL_NUMBER_OF_TEST_IMAGES, PIXELS_PER_COLOR_PER_IMAGE, f64);
 
@@ -20,52 +21,48 @@ DataIn::DataIn() {
 		convertData(ReadData("data_batch_" + ss.str() + ".bin"));
 	}
 
-	vector<unsigned char> bufferTest = ReadData("test_batch.bin");
-	//Creating test objects
-	double red,blue,green;
-	for (int i = 0; i<TOTAL_NUMBER_OF_TEST_IMAGES; i++){
-		testObjects(i, 0) = (double)bufferTest[i*TOTAL_VALUES_PER_IMAGE];
-		for (int j = 1; j<PIXELS_PER_COLOR_PER_IMAGE+1; j++){
-			red = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j];
-			blue = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j+PIXELS_PER_COLOR_PER_IMAGE];
-			green = (double)bufferTest[TOTAL_VALUES_PER_IMAGE*i+j+2*PIXELS_PER_COLOR_PER_IMAGE];
-			testObjects(i, j) = (red + blue + green) / (3 * 255);
-		}
-	}
+	af::array bufferTest = ReadData("test_batch.bin");
+
+	af::dim4 newDim(TOTAL_VALUES_PER_IMAGE, TOTAL_NUMBER_OF_TEST_IMAGES);
+	af::array inputMatrix = af::moddims(bufferTest, newDim);
+	inputMatrix.rows(1, PIXELS_PER_COLOR_PER_IMAGE) = (inputMatrix.rows(1, PIXELS_PER_COLOR_PER_IMAGE) + inputMatrix.rows(PIXELS_PER_COLOR_PER_IMAGE + 1, 2 * PIXELS_PER_COLOR_PER_IMAGE) + inputMatrix.rows(2 * PIXELS_PER_COLOR_PER_IMAGE + 1, 3 * PIXELS_PER_COLOR_PER_IMAGE)) / (double)(3 * 255);
+	testObjects = inputMatrix.rows(0, PIXELS_PER_COLOR_PER_IMAGE);
 }
 
-void DataIn::convertData(vector<unsigned char> input){
-	int objectCounter = 0;
-	double red,blue,green;
-	vector<double> images;
-	vector<int> imageCounter(10,0);
-	for (int i = 0; i<TOTAL_NUMBER_OF_TEST_IMAGES; i++){
-		for (int j = 1; j<PIXELS_PER_COLOR_PER_IMAGE+1; j++){
-			unsigned int k = TOTAL_VALUES_PER_IMAGE * i;
-			red = (double)input[k+j];
-			blue = (double)input[k+j+PIXELS_PER_COLOR_PER_IMAGE];
-			green = (double)input[k+j+2*PIXELS_PER_COLOR_PER_IMAGE];
-			dataImages((int)input[k], imageCounter[(int)input[k]],j-1) = (red + blue + green) / (3 * 255);
-			imageCounter[(int)input[k]]++;
-		}
+void DataIn::convertData(af::array &input){
+	af::dim4 newDim(TOTAL_VALUES_PER_IMAGE, TOTAL_NUMBER_OF_TEST_IMAGES);
+	af::array inputMatrix = af::moddims(input, newDim);
+	af::array classes = inputMatrix.row(0);
+	af::array intensity = (inputMatrix.rows(1, PIXELS_PER_COLOR_PER_IMAGE) + inputMatrix.rows(PIXELS_PER_COLOR_PER_IMAGE+1, 2 * PIXELS_PER_COLOR_PER_IMAGE) + inputMatrix.rows(2 * PIXELS_PER_COLOR_PER_IMAGE+1,3 * PIXELS_PER_COLOR_PER_IMAGE)) / (double)(3 * 255);
+	vector<int> imageCounter(10, 0);
+	char *classIndex = new char[10000];
+	classes.host(classIndex);
+	for (int i = 0; i<TOTAL_NUMBER_OF_TEST_IMAGES; i++) {
+		dataImages((int)classIndex[i], imageCounter[classIndex[i]], span) = intensity.col(i);
+		imageCounter[classIndex[i]] = imageCounter[classIndex[i]] +1;
 	}
+	delete[] classIndex;
 }
 
-vector<unsigned char> DataIn::ReadData(string filename) {
+af::array DataIn::ReadData(string filename) {
 	cout << "Loading: " << filename << endl;
-	std::ifstream inputData(filename.c_str(), std::ios::binary);
-	inputData.unsetf(std::ios::skipws);
-	std::streampos fileSize;
+	
+	std::basic_ifstream<unsigned char> binaryIo;
+	unsigned char* bufferTemp = 0;
+	size_t size = 0;
+	binaryIo.open(filename, ios::in | ios::binary);
+	if (binaryIo.is_open()) {
+		binaryIo.seekg(0, ios::end);
+		size = binaryIo.tellg();
+		binaryIo.seekg(0, ios::beg);
 
-    inputData.seekg(0, std::ios::end);
-    fileSize = inputData.tellg();
-    inputData.seekg(0, std::ios::beg);
+		bufferTemp = new unsigned char[TOTAL_VALUES_PER_IMAGE * TOTAL_NUMBER_OF_TEST_IMAGES];
+		binaryIo.read(bufferTemp, size);
+	}
 
-    vector<unsigned char> bufferData;
-    bufferData.reserve(fileSize);
-    bufferData.insert(bufferData.begin(), std::istream_iterator<unsigned char>(inputData), std::istream_iterator<unsigned char>());
-
-	return bufferData;
+	af::array output(TOTAL_VALUES_PER_IMAGE * TOTAL_NUMBER_OF_TEST_IMAGES, bufferTemp);
+	delete[] bufferTemp;
+	return output;
 }
 
 DataIn::~DataIn(){}

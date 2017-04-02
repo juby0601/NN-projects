@@ -11,16 +11,16 @@ Layer::~Layer() {
 void Layer::Init(unsigned int layerNeurons, af::array &inputVector) {
 	inputs = inputVector;
 	numberOfNeurons = layerNeurons;
-	deltaWeights = af::constant(0,inputVector,dims(0), layerNeurons);
-	weights = (WEIGHT_SCALE*af::randu(inputVector.dims(0), layerNeurons, f64)) - 1;
+	deltaWeights = af::constant(0, inputVector.dims(0), layerNeurons);
+	weights = WEIGHT_SCALE*((af::randu(inputVector.dims(0), layerNeurons, f64))*2 - 1);
 }
 
 void Layer::InitInputlayer(unsigned int windowSize, af::array &inputVector) {
 	af::array tempArray = af::constant(BIAS,1, f64);
 	inputs = af::join(0, inputVector, tempArray);
 	numberOfNeurons = windowSize + 1;
-	deltaWeights = af::constant(0,1, inputVector.dims(0));
-	weights = (WEIGHT_SCALE*af::randu(1, inputVector.dims(0), f64)) - 1;
+	deltaWeights = af::constant(0, inputs.dims(0), 1,f64);
+	weights = WEIGHT_SCALE*(af::randu(inputs.dims(0), 1, f64)*2 - 1);
 }
 
 void Layer::UpdateLayer(af::array inputVector) {
@@ -33,7 +33,12 @@ void Layer::UpdateInputLayer(af::array inputVector){
 }
 
 void Layer::ComputeOutputs() {
-	outputs = af::matmulTN(inputs, weights);
+	outputs = af::transpose(af::matmulTN(inputs, weights));
+	ActivationFunction(outputs);
+}
+
+void Layer::ComputeOutputsInputLayer() {
+	outputs = inputs*weights;
 	ActivationFunction(outputs);
 }
 

@@ -8,7 +8,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 using namespace std;
+#define isequal(a, b) af::alltrue<bool>((a) == (b))
 
 int main() {
 
@@ -16,15 +18,15 @@ int main() {
 
 	Runner runner;
 	runner.Training();
-	vector<int> prediction = runner.PredictValues();
+	af::array prediction = runner.PredictValues();
 
-	int numberOfMissClassification = 0;
-	for (int i = 0; i < prediction.size(); i++){
-		if (prediction[i] != runner.GetDesiredOutput(i)){
-			numberOfMissClassification++;
+	int numberOfMissclassifications = 0;
+	for (int i = 0; i < prediction.dims(0); i++){
+		if (isequal(prediction(i),runner.GetDesiredOutput(i))){
+			numberOfMissclassifications++;
 		}
 	}
-	cout << numberOfMissClassification;
+	cout << numberOfMissclassifications;
 
 	return 0;
 };

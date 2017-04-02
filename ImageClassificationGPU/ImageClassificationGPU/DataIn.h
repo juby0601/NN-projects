@@ -20,6 +20,7 @@ private:
 	af::array dataImages;
 	// Image -> (Type + Pixels)
 	af::array testObjects;
-	void convertData(std::vector<unsigned char> input);
-	std::vector<unsigned char> ReadData(std::string filename);
+	void convertData(af::array &input);
+	af::array ReadData(std::string filename);
+	std::vector<int> imageCounter;
 };
