@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="ImageClassification.cproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Config.h">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Runner.cpp">
     <Files>
       <File FileName="DataIn.h" Line="1" Column="1" />
       <File FileName="DataIn.cpp" Line="1" Column="1" />
-      <File FileName="Config.h" Line="18" Column="29" />
-      <File FileName="Runner.cpp" Line="36" Column="25" />
-      <File FileName="Runner.h" Line="12" Column="49" />
+      <File FileName="Config.h" Line="25" Column="28" />
+      <File FileName="Runner.cpp" Line="70" Column="29" />
+      <File FileName="Runner.h" Line="1" Column="1" />
       <File FileName="Neuron.cpp" Line="1" Column="1" />
       <File FileName="Neuron.h" Line="1" Column="1" />
       <File FileName="main.cpp" Line="1" Column="1" />

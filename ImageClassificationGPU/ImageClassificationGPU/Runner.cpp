@@ -14,16 +14,18 @@ Runner::Runner() {
 	data = dataIn.GetTrainingData();
 	testData = dataIn.GetTestData();
 	af::array initialImage = af::array(PIXELS_PER_COLOR_PER_IMAGE, f64);
+	initialImage = data(0,0,span);	
+	/*	
 	for (unsigned int i = 0; i < NUMBER_OF_INPUTS; i++){
 		initialImage(i) = data(0,0,i);
 	}
+	*/
 	MLP.at(0).InitInputlayer(NUMBER_OF_INPUTS, initialImage);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
 		MLP.at(i).Init(LAYER_NEURONS[i], MLP.at(i - 1).GetOutput());
 		MLP.at(i).ComputeOutputs();
 	}
-	deltaWeights = af::constant(0, GetNumberOfWeights(), f64);
 }
 
 void Runner::Training(){
@@ -57,9 +59,12 @@ void Runner::Training(){
 
 af::array Runner::PredictAValue(int classType, int imageNr){
 	af::array imagePixels = af::array(NUMBER_OF_INPUTS);
+	imagePixels = data(classType, imageNr, span);	
+	/*
 	for (unsigned int j = 0; j < NUMBER_OF_INPUTS; j++){
 		imagePixels(j) = data(classType,imageNr,j);
 	}
+	*/
 	MLP.at(0).UpdateInputLayer(imagePixels);
 	MLP.at(0).ComputeOutputs();
 	for (unsigned int i = 1; i<MLP.size(); i++){
@@ -94,50 +99,30 @@ af::array Runner::PredictValues() {
 }
 
 void Runner::Backpropogation(double learningRate, af::array &error, af::array &out){
-	for (int i = MLP.size() - 1; i >= 0; i--) {
+	
+	af::array weightTemp;
+	af::array errorSum(1,f64);
+	af::array errorSumTemp(1,f64);
+	af::array output;
 
+	// Loop through layers	
+	for (int i = MLP.size()-1; i>=0; i--){
+
+		if (i == (MLP.size()-1)){
+			output = MLP[i].GetOutput();
+			MLP[i].GetDeltaWeights() = learningRate*af::matmulNT(MLP[i].GetInput,(error*output*(1-output))) + ALPHA*MLP[i].GetDeltaWeights();
+			MLP[i].GetWeights() += MLP[i].GetDeltaWeights();
+			errorSumTemp(0) += af::sum(af::matmulTT((error*output*(1-output)),MLP[i].GetWeights()));
+		}else{
+			output = MLP[i].GetOutput();
+			MLP[i].GetDeltaWeights() = errorSum.scalar()*learningRate*af::matmulNT(MLP[i].GetInput,(output*(1-output))) + ALPHA*MLP[i].GetDeltaWeights();
+			MLP[i].GetWeights() += MLP[i].GetDeltaWeights();
+			errorSumTemp(0) += errorSum.scalar()*af::sum(af::matmulTT((output*(1-output)),MLP[i].GetWeights()));	
+		}
+		errorSum(0) = errorSumTemp.scalar();
+		errorSumTemp(0) = 0;
 	}
 	
-	/*
-	vector<double> weightTemp;
-	double errorSum = 0;
-	double errorSumTemp = 0;
-	double output;
-	int deltaWeightCounter = 0;
-	// Loop through layers
-	for (int i = MLP.size()-1; i>=0; i--){
-		// Loop through neurons in each layer
-
-		for (unsigned int j = 0; j<MLP[i].LayerSize(); j++){
-			weightTemp = MLP[i].GetNeuron(j).getWeights();
-
-			output*(1 - output)*learningRate*error(j)*MLP[i].GetInput()+ALPHA*;
-
-
-
-			if (i == (MLP.size()-1)){
-				output = out[j];
-				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*MLP[i].GetInput()[k]*error[j]+ALPHA*deltaWeights[deltaWeightCounter];
-					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*error[j]*output*(1-output);
-					deltaWeightCounter++;
-				}
-			}else{
-				output = MLP[i].GetOutput()[j];
-				for (unsigned int k = 0; k<weightTemp.size(); k++){
-					deltaWeights[deltaWeightCounter] = output*(1-output)*learningRate*errorSum*MLP[i].GetInput()[k] + ALPHA*deltaWeights[deltaWeightCounter];
-					weightTemp[k] += deltaWeights[deltaWeightCounter];
-					errorSumTemp += weightTemp[k]*errorSum*output*(1-output);
-					deltaWeightCounter++;
-				}
-			}
-			MLP[i].GetNeuron(j).setWeights(weightTemp);
-		}
-		errorSum = errorSumTemp;
-		errorSumTemp = 0;
-	}
-	*/
 }
 
 int Runner::GetNumberOfWeights(){

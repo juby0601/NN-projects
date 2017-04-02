@@ -16,6 +16,7 @@ public:
 	af::array& GetOutput();
 	af::array& GetInput();
 	af::array& GetWeights() { return weights; };
+	af::array& GetDeltaWeights() {return deltaWeights;};
 	int LayerSize();
 	void UpdateLayer(af::array inputVector);
 	void UpdateInputLayer(af::array inputVector);
@@ -24,6 +25,7 @@ private:
 	af::array outputs;
 	af::array inputs;
 	af::array weights;
+	af::array deltaWeights;
 	unsigned int numberOfNeurons;
 	std::vector<Neuron> neurons;
 };

@@ -1,0 +1,8 @@
+﻿<Properties StartupItem="helloworld_vs2013.vcxproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|CPU_x64" />
+  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
